@@ -1,0 +1,61 @@
+.tile img {
+    width:100%
+  }
+  .wBg .tile{
+    background-size: cover!important;
+    position: relative;
+  }
+  .wBg .tile i {
+    position: absolute;
+    bottom:8px;
+    color:white;
+    right: 2px;
+    cursor: pointer
+  }
+  .checked-Icon{
+    color:#f00 !important;
+  }
+  .wBg h4{
+    padding: 10px 15px;
+    text-align: center;
+    margin: 0;
+  }
+  .WBg p{
+    margin: 0;
+    padding: 0 15px 10px;
+    text-align: center;
+  }
+  .rightRs{
+    outline: none;
+  }
+  .leftRs{
+    outline: none;
+  }
+  .leftRs {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    left: -35px;
+    font-size: 48px;
+    cursor: pointer;
+  }
+  .rightRs {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    right: -35px;
+    font-size: 48px;
+    cursor: pointer;
+  }
+
+  
+  
+  

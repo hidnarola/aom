@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "source": "assets/carousel/galleria6.jpg",
+      "alt": "Description for Image 1",
+      "title": "Title 1",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria7.jpg",
+      "alt": "Description for Image 2",
+      "title": "Title 2",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria8.jpg",
+      "alt": "Description for Image 3",
+      "title": "Title 3",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria9.jpg",
+      "alt": "Description for Image 4",
+      "title": "Title 4",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria6.jpg",
+      "alt": "Description for Image 5",
+      "title": "Title 5",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria7.jpg",
+      "alt": "Description for Image 6",
+      "title": "Title 6",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria8.jpg",
+      "alt": "Description for Image 7",
+      "title": "Title 7",
+      "enable": true
+    },
+    {
+      "source": "assets/carousel/galleria9.jpg",
+      "alt": "Description for Image 8",
+      "title": "Title 8",
+      "enable": true
+    }
+  ]
+}

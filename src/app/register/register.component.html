@@ -1,0 +1,402 @@
+<section class="register-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="register-container">
+          <div class="fle-row">
+            <div class="main-step {{step_flag ? 'next_form' : 'previous_form'}}">
+              <div class="heading"><h3>Who are you?</h3></div>
+              <div class="select-who">
+                <div class="artist"><a href="javascript:;"><img src="img/artist.png" alt="Artist" (click)="nxt_btn('artist')"><h3>Artist</h3></a></div>
+                <div class="listner"><a  href="javascript:;"><img src="img/listiner.png" alt="listner" (click)="nxt_btn('listener')"><h3>Listener</h3></a></div>
+              </div>
+            </div>
+            <div class="for-artist">
+              <div class="steps step1 {{artist_cnt == 1 ? 'next_form' : ''}}" id="artist-step1" >
+                <div class="heading"><h3>Terms of Conditions </h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="terms_condition_block mCustomScrollbar " data-mcs-theme="dark-3">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?</p>
+                </div>
+                <form>
+                  <div class="agree">
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox" value="">I agree to the <a href="#">Terms of Conditions</a>
+                          <div class="chk_check"></div>
+                        </label>
+                        
+                    </div>
+                  </div>
+                </form>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step2 {{artist_cnt == 2 ? 'next_form' : ''}}" id="profile-step2">
+                <div class="heading"><h3>Create An Artist Pro</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="email-form">
+                  <form>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                      </div>
+                      <div class="form-group pwd-grp">
+                        <label for="pwd">Password</label>
+                        <input type="password" class="form-control"  placeholder="Password">
+                        <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                      </div>
+                      <div class="form-group pwd-grp">
+                        <label for="pwd">Confirm Password</label>
+                        <input type="password" class="form-control"  placeholder="Password">
+                        <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                      </div>
+                      
+                  </form>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step3 {{artist_cnt == 3 ? 'next_form' : ''}}" id="about-step3">
+                <div class="heading"><h3>Tell Us About Yourself</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="email-form">
+                  <form>
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control"  placeholder="First Name">
+                      </div>
+                      <div class="form-group pwd-grp">
+                        <label for="lanem">Last Name</label>
+                        <input type="text" class="form-control"  placeholder="Last Name">
+                      </div>
+                      <div class="form-group gender-grp">
+                        <label for="geder">Gender</label>
+                      <select class="form-control" id="gender">
+                          <option>Male</option>
+                          <option>Female</option>
+                      </select>
+                      </div>
+                      
+                  </form>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step4 {{artist_cnt == 4 ? 'next_form' : ''}}" id="location-step4">
+                <div class="heading"><h3>Where Are You From?</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="email-form">
+                  <form>
+                    <div class="form-img-wrap">
+                      <img src="img/location-icon.png" alt="Location Icon">
+                      <p>Please, Enter zip code below</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode">Zip code</label>
+                        <input type="text" class="form-control"  placeholder="Zip Code">
+                      </div>
+                      
+                  </form>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step5 {{artist_cnt == 5 ? 'next_form' : ''}}" id="music-type-step5">
+                <div class="heading"><h3>What Type of Music?</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="type-music">
+                  <ul>
+                    <li>
+                      <input type="checkbox" value="Hip Hop">
+                       <div class="music-checked">Hip Hop</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Pop">
+                      <div class="music-checked chk-pop">Pop</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="R&B">
+                      <div class="music-checked chk-rb">R&B</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Electronic">
+                      <div class="music-checked chk-ele">Electronic</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Rock">
+                      <div class="music-checked chk-rock">Rock</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Latin">
+                      <div class="music-checked chk-latin">Latin</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+
+              <div class="steps step6 {{artist_cnt == 6 ? 'next_form' : ''}}" id="social-acc-step6">
+                <div class="heading">
+                  <h3>Add Your Social Media</h3>
+                  <div class="error">
+                    <div class="error-message"><p>Please add at least one account  </p><i class="fa fa-exclamation-triangle"></i></div>
+                  </div>
+                </div>
+
+                <div class="progress_bar fill14"></div>
+                <div class="social-acc">
+                  <div class="social-block">
+                    <div class="form-group">
+                        <label for="facebook">Facebook</label>
+                        <input type="text" class="form-control" id="fb" placeholder="Add Account" required>
+                        <img src="img/fb.png" alt="Facebook">
+                      </div>
+                  </div>
+                  <div class="social-block">
+                    <div class="form-group">
+                        <label for="inst">Instagram</label>
+                        <input type="text" class="form-control" placeholder="Add Account" required>
+                        <img src="img/inst.png" alt="Facebook">
+                      </div>
+                  </div>
+                  <div class="social-block">
+                    <div class="form-group">
+                        <label for="facebook">Twitter</label>
+                        <input type="text" class="form-control" id="fb1" placeholder="Add Account" required>
+                        <img src="img/twitter.png" alt="Facebook">
+                      </div>
+                  </div>
+                  <div class="social-block">
+                    <div class="form-group">
+                        <label for="inst">Youtube</label>
+                        <input type="text" class="form-control"  placeholder="Add Account" required>
+                        <img src="img/youtube.png" alt="Facebook">
+                      </div>
+                  </div>
+                  <div class="social-block">
+                    <div class="form-group">
+                        <label for="inst">Soundcloud</label>
+                        <input type="text" class="form-control"  placeholder="Add Account" required>
+                        <img src="img/soundcloud.png" alt="Facebook">
+                      </div>
+                  </div>
+                    
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+
+              <div class="steps step7 {{artist_cnt == 7 ? 'next_form' : ''}}" id="upload-step7">
+                <div class="heading"><h3>Upload Profile Photo</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="upload-block">
+                  <div class="upl-div">
+                    <div class="upload-btn"> 
+                      <span class="upl-img"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span> 
+                      <span class="up_text">Upload Photo</span> 
+                      <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false"> 
+                      <p class="instrution">320x320px .png, .jpg 5MB or less</p>
+                    </div>
+                  </div>
+                  <div class="upl-div">
+                    <div class="upload-btn-cstm_p"> 
+                      <span class="upl-img"><img src="img/icons8-microphone2Normal.png" alt=""></span> 
+                      <!-- <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false">  -->
+                    </div>
+                  </div>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <!-- a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a-->
+                </div>
+              </div>
+            </div>
+
+            <div class="for-listner">
+              <div class="steps step1 {{listner_cnt == 1 ? 'next_form' : ''}}" id="listner-register">
+                <div class="social-login">
+                  <div class="google-login">
+                    <a href="#"><i class="fa fa-google" aria-hidden="true"></i> <span>Login with Google</span></a>
+                  </div>
+                  <div class="fb-login">
+                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> <span>Login with Facebook</span></a>
+                  </div>
+                </div>
+                <div class="progress_bar fill14"></div>
+                <div class="or">or with email</div>
+                <div class="email-form">
+                  <form>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email1" placeholder="Email">
+                      </div>
+                      <div class="form-group pwd-grp">
+                        <label for="pwd">Password</label>
+                        <input type="password" class="form-control"  placeholder="Password">
+                        <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                      </div>
+                      <div class="form-group pwd-grp">
+                        <label for="pwd">Confirm Password</label>
+                        <input type="password" class="form-control"  placeholder="Password">
+                        <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                      </div>
+                      
+                  </form>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('listener')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('listener')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step2 {{listner_cnt == 2 ? 'next_form' : ''}}" id="artist-step1">
+                <div class="heading"><h3>Terms of Conditions </h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="terms_condition_block mCustomScrollbar " data-mcs-theme="dark-3">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?</p>
+                </div>
+                <form>
+                  <div class="agree">
+                    <div class="checkbox">
+                        <label>
+                          <input type="checkbox" value="">I agree to the <a href="#">Terms of Conditions</a>
+                          <div class="chk_check"></div>
+                        </label>
+                        
+                    </div>
+                  </div>
+                </form>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('listener')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('listener')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step3 {{listner_cnt == 3 ? 'next_form' : ''}}" id="user-step2">
+                <div class="heading"><h3>Create User Name</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="email-form">
+                  <form>
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control"  placeholder="First Name">
+                      </div>
+                      <div class="form-group pwd-grp">
+                        <label for="lanem">Last Name</label>
+                        <input type="text" class="form-control"  placeholder="Last Name">
+                      </div>
+                      <div class="date-of-birth">
+                        <label for="date">Birthday</label>
+                        <div class="form-group">
+                        <select class="form-control" id="day">
+                            <option>Day</option>
+                            <option>2</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <select class="form-control" id="month">
+                            <option>Month</option>
+                            <option>2</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <select class="form-control" id="year">
+                            <option>Year</option>
+                            <option>2017</option>
+                        </select>
+                      </div>
+                      </div>
+                  </form>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('listener')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('listener')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step4 {{listner_cnt == 4 ? 'next_form' : ''}}" id="location-step4">
+                <div class="heading"><h3>Where Are You From?</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="email-form">
+                  <form>
+                    <div class="form-img-wrap">
+                      <img src="img/location-icon.png" alt="Location Icon">
+                      <p>Please, Enter zip code below</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode">Zip code</label>
+                        <input type="text" class="form-control"  placeholder="Zip Code">
+                      </div>
+                      
+                  </form>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('listener')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('listener')" class="next-btn">Next</a>
+                </div>
+              </div>
+
+              <div class="steps step5 {{listner_cnt == 5 ? 'next_form' : ''}}" id="music-type-step5">
+                <div class="heading"><h3>What Type of Music?</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="type-music">
+                  <ul>
+                    <li>
+                      <input type="checkbox" value="Hip Hop">
+                       <div class="music-checked">Hip Hop</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Pop">
+                      <div class="music-checked chk-pop">Pop</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="R&B">
+                      <div class="music-checked chk-rb">R&B</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Electronic">
+                      <div class="music-checked chk-ele">Electronic</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Rock">
+                      <div class="music-checked chk-rock">Rock</div>
+                    </li>
+                    <li>
+                      <input type="checkbox" value="Latin">
+                      <div class="music-checked chk-latin">Latin</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('listener')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <!-- a href="javascript:;" (click)="nxt_btn('listener')" class="next-btn">Next</a-->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

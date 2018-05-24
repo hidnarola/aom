@@ -1,0 +1,75 @@
+<header class="custom_header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="logo-wrap">
+          <a href="javascript:;" routerLink="">
+            <img src="img/logo.png" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-xs-9">
+        <div class="mobile-nav">
+          <a href="javascript:;">
+            <i class="fa fa-bars"></i>
+          </a>
+        </div>
+        <nav class="navigation">
+          <ul>
+            <li>
+              <a href="javascript:;" routerLink="/whats-new">What's new</a>
+            </li>
+            <li>
+              <a href="javascript:;">Artits</a>
+            </li>
+            <li>
+              <a href="javascript:;">Vote</a>
+            </li>
+            <li data-fancybox data-animation-duration="700" data-src="javascript:;login">
+              <a href="javascript:;" (click)="openVerticallyCentered(content)">Login</a>
+            </li>
+            <li class="register-btn">
+              <a href="javascript:;" routerLink="/register">Register</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header" style="border:none;">
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="login-modal">
+			<div class="social-login">
+				<div class="google-login">
+					<a href="javascript:;"><i class="fa fa-google" aria-hidden="true"></i> <span>Login with Google</span></a>
+				</div>
+				<div class="fb-login">
+					<a href="javascript:;"><i class="fa fa-facebook" aria-hidden="true"></i> <span>Login with Facebook</span></a>
+				</div>
+			</div>
+			<div class="or">or with email</div>
+			<div class="email-form">
+				<form>
+					<div class="form-group">
+					    <label for="email">Email</label>
+					    <input type="email" class="form-control" id="email" placeholder="Email">
+				  	</div>
+				  	<div class="form-group pwd-grp">
+					    <label for="pwd">Password</label>
+					    <input type="password" class="form-control" id="pwd" placeholder="Password">
+					    <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+				  	</div>
+				  	<div class="login-btn"><a href="javascript:;">Log In</a></div>
+				  	<div class="forgot-link"><a href="javascript:;">Forgot Password</a></div>
+				  	<div class="register-link">Don't have an account yet? <a href="#">Register</a></div>
+				</form>
+			</div>
+		</div>
+  </div>
+</ng-template>

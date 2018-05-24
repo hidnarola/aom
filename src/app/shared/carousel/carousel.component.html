@@ -1,0 +1,54 @@
+<ngx-carousel [inputs]="carouselOne" *ngIf="carouselType == 'normal'">
+  <ngx-tile NgxCarouselItem *ngFor="let image of images; let i = index">
+    <div class="col-md-12">
+      <div class="final-wrap">
+        <div class="img-wrap">
+          <img src="{{image.source}}" alt="Finalists">
+          <a href="javascript:void(0)" class="fan">
+            <i class="fa fa-heart-o" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="content-wrap">
+          <div class="player">
+            <div class="title">
+              <a href="#">{{ image.title }}</a>
+            </div>
+            <div class="finalist-name">{{image.name}}</div>
+            <div class="action-btn">
+              <a href="#">
+                <img src="img/play.png" alt="Pause">
+              </a>
+            </div>
+          </div>
+          <div class="location">
+            <p>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>{{images.location}}</span>
+            </p>
+            <div class="cat ele">{{images.type}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-tile>
+  <i class="material-icons leftRs" NgxCarouselPrev></i>
+  <i class="material-icons rightRs" NgxCarouselNext></i>
+</ngx-carousel>
+<ngx-carousel [inputs]="carouselOne" *ngIf="carouselType == 'banner'">
+  <ngx-tile NgxCarouselItem *ngFor="let image of images; let i = index">
+      <div class="newslider slider1">
+          <div class="banner-img">
+            <img src="{{image.source}}" alt="Banner image">
+          </div>
+          <div class="content-block">
+            <div class="what-bg-content">
+              <h3>{{ image.title }}</h3>
+              <p>{{image.description}} </p>
+              <div class="vote-btn"><a href="javascript:;">Vote Now</a></div>
+            </div>
+          </div>
+        </div>
+  </ngx-tile>
+  <i class="material-icons leftRs" NgxCarouselPrev></i>
+  <i class="material-icons rightRs" NgxCarouselNext></i>
+</ngx-carousel>

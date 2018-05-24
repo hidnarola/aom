@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="231" height="47">
+	<defs>
+		<clipPath id="clip_0">
+			<rect x="-84" y="-759" width="1300" height="1878" clip-rule="evenodd"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip_0)">
+		<text fill="rgb(26,26,26)" stroke="none" font-size="14" font-weight="bold" font-family="Helvetica" x="0" y="13.024414">
+				Blue State of Mind
+		</text>
+	</g>
+	<defs>
+		<clipPath id="clip_1">
+			<rect x="-84" y="-759" width="1300" height="1878" clip-rule="evenodd"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip_1)">
+		<path fill="rgb(155,38,176)" stroke="none" transform="translate(201 1)" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30Z"/>
+	</g>
+	<defs>
+		<clipPath id="clip_2">
+			<rect x="-84" y="-759" width="1300" height="1878" clip-rule="evenodd"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip_2)">
+		<path fill="rgb(255,255,255)" stroke="none" transform="translate(212 10)" d="M0 0L2 0L2 12L0 12L0 0Z"/>
+	</g>
+	<defs>
+		<clipPath id="clip_3">
+			<rect x="-84" y="-759" width="1300" height="1878" clip-rule="evenodd"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip_3)">
+		<path fill="rgb(255,255,255)" stroke="none" transform="translate(218 10)" d="M0 0L2 0L2 12L0 12L0 0Z"/>
+	</g>
+	<defs>
+		<clipPath id="clip_4">
+			<rect x="-84" y="-759" width="1300" height="1878" clip-rule="evenodd"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip_4)">
+		<text fill="rgb(26,26,26)" fill-opacity="0.49803922" stroke="none" transform="translate(0 17)" font-size="12" font-family="Helvetica" x="0" y="11.306641">
+				Shavn Miller
+		</text>
+	</g>
+	<defs>
+		<clipPath id="clip_5">
+			<rect x="-84" y="-759" width="1300" height="1878" clip-rule="evenodd"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip_5)">
+		<path fill="rgb(241,241,241)" stroke="none" transform="translate(1 46)" d="M0.5 0L229.5 0Q229.551 0 229.601 0.00930224Q229.65 0.0186045 229.696 0.0369061Q229.742 0.0552077 229.782 0.0819128Q229.823 0.108618 229.857 0.142857Q229.891 0.177096 229.918 0.217755Q229.945 0.258413 229.963 0.304167Q229.981 0.349921 229.991 0.399281Q230 0.448641 230 0.5L230 0.5Q230 0.551359 229.991 0.600719Q229.981 0.650079 229.963 0.695833Q229.945 0.741587 229.918 0.782245Q229.891 0.822904 229.857 0.857143Q229.823 0.891382 229.782 0.918087Q229.742 0.944792 229.696 0.963094Q229.65 0.981396 229.601 0.990698Q229.551 1 229.5 1L0.5 1Q0.448641 1 0.399281 0.990698Q0.349921 0.981396 0.304167 0.963094Q0.258413 0.944792 0.217755 0.918087Q0.177096 0.891382 0.142857 0.857143Q0.108618 0.822904 0.0819128 0.782245Q0.0552077 0.741587 0.0369061 0.695833Q0.0186045 0.650079 0.00930224 0.600719Q0 0.551359 0 0.5L0 0.5Q0 0.448641 0.00930224 0.399281Q0.0186045 0.349921 0.0369061 0.304167Q0.0552077 0.258413 0.0819128 0.217755Q0.108618 0.177096 0.142857 0.142857Q0.177096 0.108618 0.217755 0.0819128Q0.258413 0.0552077 0.304167 0.0369061Q0.349921 0.0186045 0.399281 0.00930224Q0.448641 0 0.5 0Z"/>
+	</g>
+</svg>
