@@ -11,6 +11,7 @@ var comment_helper = require('../../helpers/comment_helper');
 var vote_comment_helper = require('../../helpers/vote_comment_helper');
 var artist_helper = require('../../helpers/artist_helper');
 var track_helper = require('../../helpers/track_helper');
+var user_helper = require('../../helpers/user_helper');
 
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
@@ -67,7 +68,14 @@ router.post('/', async (req, res) => {
     } else {
       var resp = await artist_helper.get_artist_by_id(obj.artist_id);
       no_comment = resp.artist.no_of_comments + 1
-     var resp_data = await track_helper.update_artist_for_comments(obj.artist_id, no_comment);
+      var resp_data = await track_helper.update_artist_for_comments(obj.artist_id, no_comment);
+
+
+      var resp = await user_helper.get_user_by_id(obj.user_id);
+      no_comment = resp.user.no_of_comments + 1
+      var resp_data = await user_helper.update_user_for_comments(obj.user_id, no_comment);
+
+
       logger.trace("music got successfully = ", resp_data);
       res.status(config.OK_STATUS).json(resp_data);
     }
@@ -144,27 +152,27 @@ router.post('/vote_comment', async (req, res) => {
       comment_id: req.body.comment_id,
       status: req.body.status
     };
-  
+
     var data = await vote_comment_helper.upvote_or_down_vote(user_id, obj);
-   
+
     if (data && data.vote == 0) {
       // insert vote
       var resp_data = await vote_comment_helper.upvote_or_down_vote(user_id, obj);
-      
+
       if (resp_data.status == 0) {
         logger.error("Error occured while voting = ", resp_data);
         res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
       } else {
         var resp_data = await comment_helper.get_all_comment_by_comment_id(obj.comment_id);
-        if(obj.status == "upvote"){
+        if (obj.status == "upvote") {
           no_vote = resp_data.comment[0].no_of_votes + 1;
-          var resp_data = await comment_helper.update_votes(obj.comment_id,no_vote);
+          var resp_data = await comment_helper.update_votes(obj.comment_id, no_vote);
         }
-        else{
+        else {
           no_vote = resp_data.comment[0].no_of_votes - 1;
-          var resp_data = await comment_helper.update_votes(obj.comment_id,no_vote);
+          var resp_data = await comment_helper.update_votes(obj.comment_id, no_vote);
         }
-       logger.trace("voting done successfully = ", resp_data);
+        logger.trace("voting done successfully = ", resp_data);
         res.status(config.OK_STATUS).json(resp_data);
       }
     }
@@ -176,14 +184,14 @@ router.post('/vote_comment', async (req, res) => {
         res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
       } else {
         var resp_data = await comment_helper.get_all_comment_by_comment_id(obj.comment_id);
-        if(obj.status == "upvote"){
+        if (obj.status == "upvote") {
           no_vote = resp_data.comment[0].no_of_votes + 2;
-          var resp_data = await comment_helper.update_votes(obj.comment_id,no_vote);
+          var resp_data = await comment_helper.update_votes(obj.comment_id, no_vote);
         }
-        else{
+        else {
           no_vote = resp_data.comment[0].no_of_votes - 2;
-          var resp_data = await comment_helper.update_votes(obj.comment_id,no_vote);
-        }    
+          var resp_data = await comment_helper.update_votes(obj.comment_id, no_vote);
+        }
         logger.trace("voting done successfully = ", resp_data);
 
         res.status(config.OK_STATUS).json(resp_data);

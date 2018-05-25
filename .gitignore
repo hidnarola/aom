@@ -10,6 +10,9 @@
 /node_modules
 /server/node_modules
 
+# dependencies
+/server/node_modules
+
 # IDEs and editors
 /.idea
 .project

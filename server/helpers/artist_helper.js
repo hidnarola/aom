@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 
 var Artist = require("./../models/artist");
+var User = require("./../models/user");
 var Track = require("./../models/track");
 var artist_helper = {};
 var mongoose = require('mongoose');
@@ -208,6 +209,50 @@ artist_helper.get_all_track_of_artist = async () => {
         }
     } catch (err) {
         return { "status": 0, "message": "Error occured while finding music", "error": err }
+    }
+};
+
+artist_helper.get_all_active_and_suspend_artist = async (filter) => {
+    try {
+        console.log('filter',filter);
+        
+
+        var artist = await Artist
+            .find(filter, {
+                "first_name": 1,
+                "last_name": 1,
+                "gender": 1,
+                "music_type": 1,
+                "status" :1,
+                "no_of_tracks": 1,
+                "no_of_votes" : 1,
+                "no_of_likes" : 1,
+                "no_of_followers" : 1,
+                "no_of_comments" : 1,
+            })
+
+        if (artist && artist.length > 0) {
+            return { "status": 1, "message": "artist details found", "artist": artist };
+        } else {
+            return { "status": 2, "message": "artist not found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while finding artist", "error": err }
+    }
+};
+
+artist_helper.update_artist_status = async (artist_id,status) => {
+
+    try {
+        var artist = await Artist.findOneAndUpdate({ "_id": new ObjectId(artist_id) }, { "status": status })
+
+        if (artist) {
+            return { "status": 1, "message": "artist status updated", };
+        } else {
+            return { "status": 2, "message": "artist status found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while updating artist status", "error": err }
     }
 };
 

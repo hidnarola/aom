@@ -17,6 +17,7 @@ var ArtistModelSchema = new Schema({
     gender: { type: String, enum: ["male", "female"] }, 
     zipcode : Number,
     image : String,
+    status : {type : String, default : "Active"},
     no_of_tracks : {type: Number,default : 0},
     no_of_votes : {type: Number,default : 0},
     no_of_followers : {type: Number,default : 0},

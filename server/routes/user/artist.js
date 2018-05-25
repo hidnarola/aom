@@ -10,6 +10,7 @@ var follower_helper = require('../../helpers/follower_helper');
 var vote_track_helper = require('../../helpers/vote_track_helper');
 var track_helper = require('../../helpers/track_helper');
 var artist_helper = require('../../helpers/artist_helper');
+var user_helper = require('../../helpers/user_helper');
 
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
@@ -40,6 +41,7 @@ router.post('/follow', async (req, res) => {
       errorMessage: "Artist Id is required"
     },
 
+
   };
   req.checkBody(schema);
   var errors = req.validationErrors();
@@ -56,7 +58,12 @@ router.post('/follow', async (req, res) => {
     } else {
       var resp = await artist_helper.get_artist_by_id(obj.artist_id);
       no_follow = resp.artist.no_of_followers + 1
-     var resp_data = await track_helper.update_artist_for_followers(obj.artist_id, no_follow);
+      var resp_data = await track_helper.update_artist_for_followers(obj.artist_id, no_follow);
+
+      var resp = await user_helper.get_user_by_id(obj.user_id);
+      no_follow = resp.user.no_of_followers + 1
+      var resp_data = await user_helper.update_user_for_followers(obj.user_id, no_follow);
+
       logger.trace("music got successfully = ", resp_data);
       logger.trace("followed successfully = ", resp_data);
       res.status(config.OK_STATUS).json(resp_data);
@@ -102,15 +109,15 @@ router.post('/vote_track', async (req, res) => {
         res.status(config.INTERNAL_SERVER_ERROR).json(data);
       } else
 
-      var resp_data = await track_helper.get_all_track_by_track_id(obj.track_id);
+        var resp_data = await track_helper.get_all_track_by_track_id(obj.track_id);
       no_vote = resp_data.track[0].no_of_votes + 1;
       var resp_data = await track_helper.update_votes(obj.track_id, no_vote);
 
       var resp_data1 = await artist_helper.get_artist_by_id(obj.artist_id);
-    
+
       no_vote1 = resp_data1.artist.no_of_votes + 1;
-      var resp_datas  = await artist_helper.update_artist_votes(obj.artist_id, no_vote1);
-     
+      var resp_datas = await artist_helper.update_artist_votes(obj.artist_id, no_vote1);
+
 
       logger.trace("voting done successfully = ", data);
       res.status(config.OK_STATUS).json(data);
