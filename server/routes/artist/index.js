@@ -236,6 +236,7 @@ router.post("/participate", async (req, res) => {
             if (resp_data.status == 0) {
                 logger.error("Error occured while inserting = ", resp_data);
                 res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+                
             } else
 
                 var resp_data = await contest_helper.get_contest_by_id(obj.contest_id);
