@@ -66,14 +66,14 @@ router.post('/', async (req, res) => {
       logger.error("Error occured while fetching music = ", resp_data);
       res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
     } else {
-      var resp = await artist_helper.get_artist_by_id(obj.artist_id); 
+      var resp = await artist_helper.get_artist_by_id(obj.artist_id);
       no_comment = resp.artist.no_of_comments + 1
       var resp_data = await track_helper.update_artist_for_comments(obj.artist_id, no_comment);
 
 
       var resp = await user_helper.get_user_by_id(obj.user_id);
-      console.log('resp',resp);
-      
+      console.log('resp', resp);
+
       no_comment = resp.user.no_of_comments + 1
       var resp_data = await user_helper.update_user_for_comments(obj.user_id, no_comment);
 

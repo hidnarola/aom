@@ -18,8 +18,4 @@ router.use("/comment",auth, authorization, comment);
 router.use("/track",auth, authorization, track);
 router.use("/artist",auth, authorization, artist);
 
-
-//router.use("/campaign",auth, authorization, campaign);
-
-
 module.exports = router;

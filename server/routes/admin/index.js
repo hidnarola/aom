@@ -36,11 +36,11 @@ router.put("/", async (req, res) => {
   };
   if (req.body.name && req.body.name != null) {
     obj.name = req.body.name;
- }
- if (req.body.password && req.body.password != null) {
-  obj.password = req.body.password;
- }
-  var resp_data = await admin_helper.update_admin_by_id(user_id,obj);
+  }
+  if (req.body.password && req.body.password != null) {
+    obj.password = req.body.password;
+  }
+  var resp_data = await admin_helper.update_admin_by_id(user_id, obj);
   if (resp_data.status == 0) {
     logger.error("Error occured while updating = ", resp_data);
     res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);

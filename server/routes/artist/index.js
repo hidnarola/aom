@@ -31,17 +31,17 @@ var fs = require('fs');
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.get('/get_music_and_track', async (req, res) => {
-  artist_id=req.userInfo.id;
-  var media = await media_helper.get_all_media_of_artist(artist_id);
-  var track = await track_helper.get_all_track_of_artist(artist_id);
+    artist_id = req.userInfo.id;
+    var media = await media_helper.get_all_media_of_artist(artist_id);
+    var track = await track_helper.get_all_track_of_artist(artist_id);
 
-  if (media.status === 1 && track.status === 1 ) {
-      logger.trace("got details successfully");
-      res.status(config.OK_STATUS).json({ "status": 1, "media": media.media, "track": track.track});
-  } else {
-      logger.error("Error occured while fetching = ", media);
-      res.status(config.INTERNAL_SERVER_ERROR).json(media);
-  }
+    if (media.status === 1 && track.status === 1) {
+        logger.trace("got details successfully");
+        res.status(config.OK_STATUS).json({ "status": 1, "media": media.media, "track": track.track });
+    } else {
+        logger.error("Error occured while fetching = ", media);
+        res.status(config.INTERNAL_SERVER_ERROR).json(media);
+    }
 });
 
 
@@ -56,11 +56,11 @@ router.get('/get_music_and_track', async (req, res) => {
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.get('/artist_by_id', async (req, res) => {
-    artist_id=req.userInfo.id;
+    artist_id = req.userInfo.id;
     var artist = await artist_helper.get_artist_by_id(artist_id);
     if (artist.status === 1) {
         logger.trace("got details successfully");
-        res.status(config.OK_STATUS).json({ "status": 1, "artist": artist.artist});
+        res.status(config.OK_STATUS).json({ "status": 1, "artist": artist.artist });
     } else {
         logger.error("Error occured while fetching = ", artist);
         res.status(config.INTERNAL_SERVER_ERROR).json(artist);
@@ -92,27 +92,27 @@ router.get('/artist_by_id', async (req, res) => {
 router.put('/', function (req, res) {
     user_id = req.userInfo.id;
     var obj = {
-       
+
     };
-    if (req.body.social_media ) {
+    if (req.body.social_media) {
         obj.social_media = req.body.social_media;
     }
-    if (req.body.email ) {
+    if (req.body.email) {
         obj.email = req.body.email;
     }
-    if (req.body.password ) {
+    if (req.body.password) {
         obj.password = req.body.password;
     }
-    if (req.body.first_name ) {
+    if (req.body.first_name) {
         obj.first_name = req.body.first_name;
     }
-    if (req.body.last_name ) {
+    if (req.body.last_name) {
         obj.last_name = req.body.last_name;
     }
-    if (req.body.zipcode ) {
+    if (req.body.zipcode) {
         obj.zipcode = req.body.zipcode;
     }
-    if (req.body.music_type ) {
+    if (req.body.music_type) {
         obj.music_type = req.body.music_type;
     }
     async.waterfall([
@@ -168,28 +168,28 @@ router.put('/', function (req, res) {
 
 
 router.post('/', async (req, res) => {
-    var resp_gender = await follower_helper.get_artist_followers_by_gender(req.userInfo.id,req.body.day);
-    var resp_day = await follower_helper.get_artist_followers_by_day(req.userInfo.id,req.body.day);
-    var resp_age = await follower_helper.get_artist_followers_by_age(req.userInfo.id,req.body.day);
+    var resp_gender = await follower_helper.get_artist_followers_by_gender(req.userInfo.id, req.body.day);
+    var resp_day = await follower_helper.get_artist_followers_by_day(req.userInfo.id, req.body.day);
+    var resp_age = await follower_helper.get_artist_followers_by_age(req.userInfo.id, req.body.day);
     if (resp_gender.status === 0 && resp_day.status === 0 && resp_age.status === 0) {
-        res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while finding artist", "error": resp_gender.error ,"error":resp_day.error });
+        res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while finding artist", "error": resp_gender.error, "error": resp_day.error });
     } else if (resp_gender.status === 2) {
         res.status(config.BAD_REQUEST).json({ "status": 0, "message": "Not available" });
     } else {
-        res.status(config.OK_STATUS).json({ "status": 1, "message": "Followers found", "gender": resp_gender.results,"day" : resp_day.results, "age" : resp_age.results });
+        res.status(config.OK_STATUS).json({ "status": 1, "message": "Followers found", "gender": resp_gender.results, "day": resp_day.results, "age": resp_age.results });
     }
 });
 
 
 
 router.get('/track_likes', async (req, res) => {
-    artist_id=req.userInfo.id;
-  
+    artist_id = req.userInfo.id;
+
     var track = await track_helper.get_all_track_by_id(artist_id);
-  
-    if ( track.status === 1 ) {
+
+    if (track.status === 1) {
         logger.trace("got details successfully");
-        res.status(config.OK_STATUS).json({ "status": 1, "track": track.track});
+        res.status(config.OK_STATUS).json({ "status": 1, "track": track.track });
     } else {
         logger.error("Error occured while fetching = ", track);
         res.status(config.INTERNAL_SERVER_ERROR).json(track);
@@ -199,11 +199,11 @@ router.get('/track_likes', async (req, res) => {
 
 
 router.get('/track_comment', async (req, res) => {
-    artist_id=req.userInfo.id;
+    artist_id = req.userInfo.id;
     var comment = await comment_helper.get_all_comment_by_track(artist_id);
-    if ( comment.status === 1 ) {
+    if (comment.status === 1) {
         logger.trace("got details successfully");
-        res.status(config.OK_STATUS).json({ "status": 1, "comment": comment.comment});
+        res.status(config.OK_STATUS).json({ "status": 1, "comment": comment.comment });
     } else {
         logger.error("Error occured while fetching = ", track);
         res.status(config.INTERNAL_SERVER_ERROR).json(track);
@@ -212,47 +212,47 @@ router.get('/track_comment', async (req, res) => {
 
 router.post("/participate", async (req, res) => {
     var schema = {
-   
-      "contest_id": {
-        notEmpty: true,
-        errorMessage: "Music Type is required"
-      },
-      
+
+        "contest_id": {
+            notEmpty: true,
+            errorMessage: "Music Type is required"
+        },
+
     };
-  
+
     req.checkBody(schema);
     var errors = req.validationErrors();
     if (!errors) {
-   
-    var obj = {
-      artist_id :req.userInfo.id,
-      contest_id : req.body.contest_id
-    };
-   
-   var resp_data = await participate_helper.get_participant(obj.artist_id, obj.contest_id); 
-   if (resp_data && resp_data.participate == 0) {
 
-    var resp_data = await participate_helper.insert_participant(obj);
-    if (resp_data.status == 0) {
-      logger.error("Error occured while inserting = ", resp_data);
-      res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
-     } else
+        var obj = {
+            artist_id: req.userInfo.id,
+            contest_id: req.body.contest_id
+        };
 
-     var resp_data = await contest_helper.get_contest_by_id(obj.contest_id);
-     no_paritipant = resp_data.contest.no_of_participants + 1
-     var resp_data = await contest_helper.update_participant(obj.contest_id, no_paritipant);
-     logger.trace(" got successfully = ", resp_data);
-     res.status(config.OK_STATUS).json(resp_data);
-   }
-   else {
-     logger.trace("Already participated for this contest");
-     res.status(config.OK_STATUS).json({ "message": "Already participated for this contest" });
-   }
- } 
-   else {
-    logger.error("Validation Error = ", errors);
-    res.status(config.BAD_REQUEST).json({ message: errors });
-   }
+        var resp_data = await participate_helper.get_participant(obj.artist_id, obj.contest_id);
+        if (resp_data && resp_data.participate == 0) {
+
+            var resp_data = await participate_helper.insert_participant(obj);
+            if (resp_data.status == 0) {
+                logger.error("Error occured while inserting = ", resp_data);
+                res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+            } else
+
+                var resp_data = await contest_helper.get_contest_by_id(obj.contest_id);
+            no_paritipant = resp_data.contest.no_of_participants + 1
+            var resp_data = await contest_helper.update_participant(obj.contest_id, no_paritipant);
+            logger.trace(" got successfully = ", resp_data);
+            res.status(config.OK_STATUS).json(resp_data);
+        }
+        else {
+            logger.trace("Already participated for this contest");
+            res.status(config.OK_STATUS).json({ "message": "Already participated for this contest" });
+        }
+    }
+    else {
+        logger.error("Validation Error = ", errors);
+        res.status(config.BAD_REQUEST).json({ message: errors });
+    }
 });
 
 

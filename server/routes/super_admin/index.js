@@ -232,14 +232,14 @@ router.post("/list_users", async (req, res) => {
   var page_size = {};
 
   var schema = {
-  /*  "page_no": {
-      notEmpty: true,
-      errorMessage: "page_no is required"
-    },
-    "page_size": {
-      notEmpty: true,
-      errorMessage: "page_size is required"
-    }*/
+    /*  "page_no": {
+        notEmpty: true,
+        errorMessage: "page_no is required"
+      },
+      "page_size": {
+        notEmpty: true,
+        errorMessage: "page_size is required"
+      }*/
   };
 
   /*if (req.body.gender) {
@@ -318,9 +318,9 @@ router.post("/home", async (req, res) => {
 router.post("/get_artist", async (req, res) => {
 
   var filter = {};
-  
 
- if (req.body.location) {
+
+  if (req.body.location) {
     filter.location = req.body.location;
   }
 
@@ -328,22 +328,22 @@ router.post("/get_artist", async (req, res) => {
     filter.music_type = new ObjectId(req.body.music_type);
   }
 
- 
+
 
   if (req.body.search) {
     var r = new RegExp(req.body.search);
     var search = { "$regex": r, "$options": "i" };
     filter.first_name = search;
   }
- 
-    var resp_data = await artist_helper.get_all_active_and_suspend_artist(filter);
-    if (resp_data.status == 0) {
-      logger.error("Error occured while fetching artist = ", resp_data);
-      res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
-    } else {
-      logger.trace("artist got successfully = ", { "artist": resp_data });
-      res.status(config.OK_STATUS).json({ "artist": resp_data });
-    }
+
+  var resp_data = await artist_helper.get_all_active_and_suspend_artist(filter);
+  if (resp_data.status == 0) {
+    logger.error("Error occured while fetching artist = ", resp_data);
+    res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+  } else {
+    logger.trace("artist got successfully = ", { "artist": resp_data });
+    res.status(config.OK_STATUS).json({ "artist": resp_data });
+  }
 });
 
 
@@ -399,29 +399,29 @@ router.post("/suspend/user/:user_id", async (req, res) => {
 
 router.post("/get_user", async (req, res) => {
 
-  var filter = {};  
- if (req.body.location) {
+  var filter = {};
+  if (req.body.location) {
     filter.location = req.body.location;
   }
 
   if (req.body.music_type) {
     filter.music_type = new ObjectId(req.body.music_type);
-  } 
+  }
 
   if (req.body.search) {
     var r = new RegExp(req.body.search);
     var search = { "$regex": r, "$options": "i" };
     filter.first_name = search;
   }
- 
-    var resp_data = await user_helper.get_all_active_and_suspend_user(filter);
-    if (resp_data.status == 0) {
-      logger.error("Error occured while fetching artist = ", resp_data);
-      res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
-    } else {
-      logger.trace("artist got successfully = ", { "artist": resp_data });
-      res.status(config.OK_STATUS).json({ "artist": resp_data });
-    }
-  
+
+  var resp_data = await user_helper.get_all_active_and_suspend_user(filter);
+  if (resp_data.status == 0) {
+    logger.error("Error occured while fetching artist = ", resp_data);
+    res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+  } else {
+    logger.trace("artist got successfully = ", { "artist": resp_data });
+    res.status(config.OK_STATUS).json({ "artist": resp_data });
+  }
+
 });
 module.exports = router;
