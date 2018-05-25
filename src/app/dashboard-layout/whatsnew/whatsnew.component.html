@@ -17,8 +17,8 @@
                     </div>
                   </form>
                 </div>
-                <div class="filter-head">
-                  <a href="#">
+                <div class="filter-head" (click)="toggleFilter()">
+                  <a href="javascript:;">
                     <div class="filter-icon"><img src="img/filter.png" alt="Filter Icon"></div>
                     <span>Filters <i class="fa fa-caret-right"></i></span>
                   </a>
@@ -26,7 +26,7 @@
                 </div>
               </div>
             </div>
-            <div class="filter-drop-down">
+            <div class="filter-drop-down" [style.display]="show_filter ? 'block' : 'none'">
               <div class="container">
                 <div class="row">
                   <div class="col-md-2 col-sm-6 col-xs-6">
