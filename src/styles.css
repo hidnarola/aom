@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-.terms_condition_block p {
-    max-height: 140px;
-    overflow: auto;
-}
+.terms_condition_block p {max-height: 140px;overflow: auto;}
+.artist-highlight .highlights-wrap,
+.newuploads-wrap .uploads-container {max-height: 300px;overflow: auto;width: 100%;}

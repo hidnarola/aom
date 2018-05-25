@@ -8,33 +8,37 @@ import { Component, OnInit } from '@angular/core';
 export class WhatsNewComponent implements OnInit {
   
   images: any = [];
+  show_filter : any = false;
   constructor() {
     this.images =  [
       {
         "source": "img/whats-new-bg.png",
         "alt": "Description for Image 1",
-        "title": "Title 1",
+        "title": "Quarter Final",
         "name": "Title 1",
         "location": "Title 1",
         "type": "Title 1",
+        "description" : "Ut enim ad minim veniam",
         "enable": true
       },
       {
         "source": "img/whats-new-bg.png",
         "alt": "Description for Image 2",
-        "title": "Title 2",
+        "title": "Quarter Final",
         "name": "Title 1",
         "location": "Title 1",
         "type": "Title 1",
+        "description" : "Ut enim ad minim veniam",
         "enable": true
       },
       {
         "source": "img/whats-new-bg.png",
         "alt": "Description for Image 3",
-        "title": "Title 3",
+        "title": "Quarter Final",
         "name": "Title 1",
         "location": "Title 1",
         "type": "Title 1",
+        "description" : "Ut enim ad minim veniam",
         "enable": true
       }];
    }
@@ -42,5 +46,8 @@ export class WhatsNewComponent implements OnInit {
   ngOnInit() {
   }
 
+  toggleFilter() {
+    this.show_filter = !this.show_filter;
+  }
   
 }
