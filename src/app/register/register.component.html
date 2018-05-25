@@ -13,54 +13,58 @@
             </div>
             <div class="for-artist">
               <div class="steps step1 {{artist_cnt == 1 ? 'next_form' : ''}}" id="artist-step1" >
-                <div class="heading"><h3>Terms of Conditions </h3></div>
-                <div class="progress_bar fill14"></div>
-                <div class="terms_condition_block mCustomScrollbar " data-mcs-theme="dark-3">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?</p>
-                </div>
-                <form>
+                <form [formGroup]="artist_step1">
+                  <div class="heading"><h3>Terms of Conditions </h3></div>
+                  <div class="progress_bar fill14"></div>
+                  <div class="terms_condition_block mCustomScrollbar " data-mcs-theme="dark-3">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quisquam, tempora adipisci debitis voluptates. Labore tenetur ipsa itaque ea vero repellat fuga doloribus non facere animi molestiae dolorem provident quasi veniam accusamus, ipsum minima ipsam architecto. Possimus officiis facilis iusto quod modi atque dolorum veniam reiciendis? Voluptate porro tempora quam?</p>
+                  </div>
                   <div class="agree">
                     <div class="checkbox">
                         <label>
-                          <input type="checkbox" value="">I agree to the <a href="#">Terms of Conditions</a>
+                          <input type="checkbox" value="" formControlName="terms_condtion"  name="artist_terms_condition" required [(ngModel)]="artist_data.terms_condition">I agree to the <a href="javascript:;">Terms of Conditions</a>
                           <div class="chk_check"></div>
                         </label>
-                        
                     </div>
                   </div>
+                  <div class="button_group">
+                    <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                    <button type="submit" (click)="nxt_btn('artist')" class="next-btn" [disabled]="!artist_step1.valid">Next</button>
+                  </div>
                 </form>
-                <div class="button_group">
-                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
-                </div>
               </div>
 
               <div class="steps step2 {{artist_cnt == 2 ? 'next_form' : ''}}" id="profile-step2">
-                <div class="heading"><h3>Create An Artist Pro</h3></div>
-                <div class="progress_bar fill14"></div>
-                <div class="email-form">
-                  <form>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email">
-                      </div>
-                      <div class="form-group pwd-grp">
-                        <label for="pwd">Password</label>
-                        <input type="password" class="form-control"  placeholder="Password">
-                        <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
-                      </div>
-                      <div class="form-group pwd-grp">
-                        <label for="pwd">Confirm Password</label>
-                        <input type="password" class="form-control"  placeholder="Password">
-                        <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
-                      </div>
+                  <form [formGroup]="artist_step2">
+                    <div class="heading"><h3>Create An Artist Pro</h3></div>
+                    <div class="progress_bar fill14"></div>
+                    <div class="email-form">
                       
-                  </form>
-                </div>
-                <div class="button_group">
-                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
-                </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" formControlName="email"  [(ngModel)]="artist_data.email" name="artist_email" id="email" placeholder="Email" required>
+                            <div *ngIf="artist_step2.invalid && (artist_step2.controls['email'].dirty || artist_step2.controls['email'].touched)">
+                              <!-- <span *ngIf="artist_step2.controls['email'].errors.required" class="text-danger">Email is required</span>
+                              <span *ngIf="artist_step2.controls['email'].errors.pattern" class="text-danger">Email Mismatch</span> -->
+                            </div>
+                          </div>
+                          <div class="form-group pwd-grp">
+                            <label for="pwd">Password</label>
+                            <input type="password" class="form-control" formControlName="password" placeholder="Password"  required [(ngModel)]="artist_data.password" name="password">
+                            <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                            
+                          </div>
+                          <div class="form-group pwd-grp">
+                            <label for="pwd">Confirm Password</label>
+                            <input type="password" class="form-control" formControlName="conf"  name="confirm" [(ngModel)]="artist_data.confirm_password" placeholder="Password" required >
+                            <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                          </div>
+                    </div>
+                    <div class="button_group">
+                      <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                      <button type="submit" (click)="nxt_btn('artist')" class="next-btn" >Next</button>
+                    </div>
+                </form>
               </div>
 
               <div class="steps step3 {{artist_cnt == 3 ? 'next_form' : ''}}" id="about-step3">
@@ -153,13 +157,39 @@
 
 
               <div class="steps step6 {{artist_cnt == 6 ? 'next_form' : ''}}" id="social-acc-step6">
+                <div class="heading"><h3>Upload Profile Photo</h3></div>
+                <div class="progress_bar fill14"></div>
+                <div class="upload-block">
+                  <div class="upl-div">
+                    <div class="upload-btn"> 
+                      <span class="upl-img"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span> 
+                      <span class="up_text">Upload Photo</span> 
+                      <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false"> 
+                      <p class="instrution">320x320px .png, .jpg 5MB or less</p>
+                    </div>
+                  </div>
+                  <div class="upl-div">
+                    <div class="upload-btn-cstm_p"> 
+                      <span class="upl-img"><img src="img/icons8-microphone2Normal.png" alt=""></span> 
+                      <!-- <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false">  -->
+                    </div>
+                  </div>
+                </div>
+
                 <div class="heading">
                   <h3>Add Your Social Media</h3>
                   <div class="error">
                     <div class="error-message"><p>Please add at least one account  </p><i class="fa fa-exclamation-triangle"></i></div>
                   </div>
                 </div>
+                <div class="button_group">
+                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                </div>
+              </div>
 
+
+              <div class="steps step7 {{artist_cnt == 7 ? 'next_form' : ''}}" id="upload-step7">
                 <div class="progress_bar fill14"></div>
                 <div class="social-acc">
                   <div class="social-block">
@@ -198,32 +228,6 @@
                       </div>
                   </div>
                     
-                </div>
-                <div class="button_group">
-                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
-                </div>
-              </div>
-
-
-              <div class="steps step7 {{artist_cnt == 7 ? 'next_form' : ''}}" id="upload-step7">
-                <div class="heading"><h3>Upload Profile Photo</h3></div>
-                <div class="progress_bar fill14"></div>
-                <div class="upload-block">
-                  <div class="upl-div">
-                    <div class="upload-btn"> 
-                      <span class="upl-img"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span> 
-                      <span class="up_text">Upload Photo</span> 
-                      <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false"> 
-                      <p class="instrution">320x320px .png, .jpg 5MB or less</p>
-                    </div>
-                  </div>
-                  <div class="upl-div">
-                    <div class="upload-btn-cstm_p"> 
-                      <span class="upl-img"><img src="img/icons8-microphone2Normal.png" alt=""></span> 
-                      <!-- <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false">  -->
-                    </div>
-                  </div>
                 </div>
                 <div class="button_group">
                   <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>

@@ -2,3 +2,4 @@
 .terms_condition_block p {max-height: 140px;overflow: auto;}
 .artist-highlight .highlights-wrap,
 .newuploads-wrap .uploads-container {max-height: 300px;overflow: auto;width: 100%;}
+.track-table, .highlights-wrap{max-height: 1110px;overflow: auto;width: 100%;}
