@@ -17,7 +17,6 @@ var UserModelSchema = new Schema({
     gender: { type: String, enum: ["male", "female"] }, 
     zipcode : Number,
     dob :{ type: Date },
-    no_of_tracks : {type: Number,default : 0},
     no_of_votes : {type: Number,default : 0},
     no_of_followers : {type: Number,default : 0},
     no_of_likes : {type: Number,default : 0},
