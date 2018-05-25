@@ -1,5 +1,7 @@
 var jwt = require('jsonwebtoken');
 
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
 var User = require("./../models/user");
 var user_helper = {};
 
@@ -137,6 +139,102 @@ user_helper.delete_user_by_admin = async (user_id) => {
         var user = await User.findOneAndRemove({ "_id": (user_id)})
         if (user ) {
             return { "status": 1, "message": "user details found", "user":  user };
+        } else {
+            return { "status": 2, "message": "user not found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while finding user", "error": err }
+    }
+};
+
+
+user_helper.update_user_status = async (user_id,status) => {
+
+    try {
+        console.log("1");
+        var user = await User.findOneAndUpdate({ "_id": new ObjectId(user_id) },{ "status": status });
+        
+        console.log("2",user);
+        if (user) {
+            return { "status": 1, "message": "user status updated", };
+        } else {
+            return { "status": 2, "message": "user status found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while updating user status", "error": err }
+    }
+};
+
+user_helper.update_user_for_votes = async (id, no_vote) => {
+    try {
+        var contest = await User.findOneAndUpdate({ "_id": new ObjectId(id) }, { "no_of_votes": no_vote })
+        if (contest) {
+            return { "status": 1, "message": "contest updated", };
+        } else {
+            return { "status": 2, "message": "contest not found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while finding contest", "error": err }
+    }
+};
+user_helper.update_user_for_likes = async (id, no_like) => {
+    try {
+        var contest = await User.findOneAndUpdate({ "_id": new ObjectId(id) }, { "no_of_likes": no_like })
+        if (contest) {
+            return { "status": 1, "message": "likes updated", };
+        } else {
+            return { "status": 2, "message": "likes not found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while finding likes", "error": err }
+    }
+};
+
+user_helper.update_user_for_followers = async (id, no_follow) => {
+    try {
+        var contest = await User.findOneAndUpdate({ "_id": new ObjectId(id) }, { "no_of_followers": no_follow })
+        if (contest) {
+            return { "status": 1, "message": "followers updated", };
+        } else {
+            return { "status": 2, "message": "followers not found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while following", "error": err }
+    }
+};
+user_helper.update_user_for_comments = async (id, no_comment) => {
+    try {
+        var contest = await User.findOneAndUpdate({ "_id": new ObjectId(id) }, { "no_of_comments": no_comment })
+        if (contest) {
+            return { "status": 1, "message": "comments updated", };
+        } else {
+            return { "status": 2, "message": "comments not found" };
+        }
+    } catch (err) {
+        return { "status": 0, "message": "Error occured while commenting", "error": err }
+    }
+};
+
+user_helper.get_all_active_and_suspend_user = async (filter) => {
+    try {
+        console.log('filter',filter);
+        
+
+        var user = await User
+            .find(filter, {
+                "first_name": 1,
+                "last_name": 1,
+                "gender": 1,
+                "music_type": 1,
+                "status" :1,
+                "no_of_votes" : 1,
+                "no_of_likes" : 1,
+                "no_of_followers" : 1,
+                "no_of_comments" : 1,
+            })
+
+        if (user && user.length > 0) {
+            return { "status": 1, "message": "user details found", "user": user };
         } else {
             return { "status": 2, "message": "user not found" };
         }

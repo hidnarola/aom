@@ -12,6 +12,7 @@ var track_helper = require('../../helpers/track_helper');
 var like_helper = require('../../helpers/like_helper');
 var download_helper = require('../../helpers/download_helper');
 var artist_helper = require('../../helpers/artist_helper');
+var user_helper = require('../../helpers/user_helper');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var fs = require('fs');
@@ -104,12 +105,12 @@ router.post('/vote_track', async (req, res) => {
     var obj = {
       user_id: req.userInfo.id,
       track_id: req.body.track_id,
-      artist_id : req.body.artist_id
+      artist_id: req.body.artist_id
 
     };
 
     var resp_data = await vote_track_helper.get_all_voted_artist(user_id, obj.track_id);
-   
+
     if (resp_data && resp_data.vote == 0) {
       var data = await vote_track_helper.vote_for_track(user_id, obj);
       if (data && data.status == 0) {
@@ -117,13 +118,20 @@ router.post('/vote_track', async (req, res) => {
         res.status(config.INTERNAL_SERVER_ERROR).json(data);
       } else
 
-      var resp_data = await track_helper.get_all_track_by_track_id(obj.track_id);
+        var resp_data = await track_helper.get_all_track_by_track_id(obj.track_id);
 
       no_vote = resp_data.track.no_of_votes + 1;
       var resp_data = await track_helper.update_votes(obj.track_id, no_vote);
       var resp = await artist_helper.get_artist_by_id(obj.artist_id);
       no_vote = resp.artist.no_of_votes + 1
-     var resp_data = await track_helper.update_artist_for_votes(obj.artist_id, no_vote);
+      var resp_data = await track_helper.update_artist_for_votes(obj.artist_id, no_vote);
+      logger.trace("voting done successfully = ", data);
+
+
+
+      var resp = await user_helper.get_user_by_id(obj.user_id);
+      no_vote = resp.user.no_of_votes + 1
+      var resp_data = await user_helper.update_user_for_votes(obj.user_id, no_vote);
       logger.trace("voting done successfully = ", data);
       res.status(config.OK_STATUS).json(data);
     }
@@ -161,7 +169,7 @@ router.post('/like_track', async (req, res) => {
     var obj = {
       user_id: req.userInfo.id,
       track_id: req.body.track_id,
-      artist_id : req.body.artist_id
+      artist_id: req.body.artist_id
     };
 
     var resp_data = await like_helper.get_like(user_id, obj.track_id);
@@ -177,12 +185,16 @@ router.post('/like_track', async (req, res) => {
         var resp_data = await like_helper.get_all_track_by_track_id(obj.track_id);
       no_vote = resp_data.like[0].no_of_likes + 1;
       var resp_data = await like_helper.update_likes(obj.track_id, no_vote);
-      
-          var resp = await artist_helper.get_artist_by_id(obj.artist_id);
-           no_like = resp.artist.no_of_likes + 1
-          var resp_data = await track_helper.update_artist_for_likes(obj.artist_id, no_like);
-          res.status(config.OK_STATUS).json({ "message": "Inserted successfully" });
-      
+
+      var resp = await artist_helper.get_artist_by_id(obj.artist_id);
+      no_like = resp.artist.no_of_likes + 1
+      var resp_data = await track_helper.update_artist_for_likes(obj.artist_id, no_like);
+
+      var resp = await user_helper.get_user_by_id(obj.user_id);
+      no_like= resp.user.no_of_likes + 1
+     var resp_data = await user_helper.update_user_for_likes(obj.user_id,no_like);
+
+     
       logger.trace("like done successfully = ", data);
       res.status(config.OK_STATUS).json(data);
     }
@@ -201,9 +213,9 @@ router.post('/like_track', async (req, res) => {
 
 router.get('/:track_id/download', async (req, res) => {
   try {
-    var obj={
-      user_id : req.userInfo.id,
-      track_id : req.params.track_id
+    var obj = {
+      user_id: req.userInfo.id,
+      track_id: req.params.track_id
     }
     var resp_data = await download_helper.download_track(obj);
     if (resp_data.status == 0) {
@@ -213,7 +225,7 @@ router.get('/:track_id/download', async (req, res) => {
       var resp_data = await download_helper.get_all_track_by_track_id(obj.track_id);
       no_download = resp_data.track.no_of_downloads + 1;
       var resp_data = await download_helper.update_downloads(obj.track_id, no_download);
-      
+
       logger.trace("music got successfully = ", resp_data);
       res.status(config.OK_STATUS).json(resp_data);
     }
@@ -224,15 +236,15 @@ router.get('/:track_id/download', async (req, res) => {
       // create a file to stream archive data to.
       var output = await fs.createWriteStream(__dirname + '/../../uploads/' + filename);
       var archive = await archiver('zip', {
-      zlib: { level: 9 } 
+        zlib: { level: 9 }
       });
 
       archive.pipe(output);
 
       archive.append(fs.createReadStream(__dirname + '/../../uploads/track/' + track_resp.track.audio), { name: track_resp.track.audio });
       archive.finalize();
-      
-     
+
+
 
     } else {
       res.status(200).json({ "status": 0, "message": "track not found" });
