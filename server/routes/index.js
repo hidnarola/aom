@@ -173,7 +173,6 @@ router.post('/artist_registration', async (req, res) => {
           res.status(config.BAD_REQUEST).json({ "status": 0, "message": "Artist's email already exist" });
         }
       }
-
     );
   } else {
     logger.error("Validation Error = ", errors);

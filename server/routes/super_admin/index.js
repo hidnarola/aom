@@ -343,9 +343,7 @@ router.post("/get_artist", async (req, res) => {
     } else {
       logger.trace("artist got successfully = ", { "artist": resp_data });
       res.status(config.OK_STATUS).json({ "artist": resp_data });
-
     }
-  
 });
 
 
@@ -423,7 +421,6 @@ router.post("/get_user", async (req, res) => {
     } else {
       logger.trace("artist got successfully = ", { "artist": resp_data });
       res.status(config.OK_STATUS).json({ "artist": resp_data });
-
     }
   
 });
