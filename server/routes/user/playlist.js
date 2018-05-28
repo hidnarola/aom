@@ -38,43 +38,42 @@ router.post('/', function (req, res) {
       notEmpty: true,
       errorMessage: "Artist Id is required"
     },
-    
+
   };
   req.checkBody(schema);
   var errors = req.validationErrors();
   if (!errors) {
-  var obj = {
+    var obj = {
       user_id: req.userInfo.id,
       name: req.body.name,
-     
+
     };
-   if(req.body.description && req.body.description!=null)
-   {
-     obj.description = req.body.description
-   }
-		async.waterfall(
+    if (req.body.description && req.body.description != null) {
+      obj.description = req.body.description
+    }
+    async.waterfall(
       [
-        function(callback) {
+        function (callback) {
           //image upload
           if (req.files && req.files["audio"]) {
             var file_path_array = [];
             // var files = req.files['images'];
             var files = [].concat(req.files.audio);
             var dir = "./uploads/track";
-             var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
+            var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
 
             // assuming openFiles is an array of file names
             async.eachSeries(
               files,
-              function(file, loop_callback) {
-								var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
+              function (file, loop_callback) {
+                var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
                 if (mimetype.indexOf(file.mimetype) != -1) {
                   if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                   }
                   extention = ".mp4";
                   filename = "audio_" + new Date().getTime() + extention;
-                  file.mv(dir + "/" + filename, function(err) {
+                  file.mv(dir + "/" + filename, function (err) {
                     if (err) {
                       logger.error("There was an issue in uploading audio");
                       loop_callback({
@@ -86,7 +85,7 @@ router.post('/', function (req, res) {
                         "image has been uploaded. Image name = ",
                         filename
                       );
-                      location =  filename;
+                      location = filename;
                       file_path_array.push(location);
                       loop_callback();
                     }
@@ -99,7 +98,7 @@ router.post('/', function (req, res) {
                   });
                 }
               },
-              function(err) {
+              function (err) {
                 // if any of the file processing produced an error, err would equal that error
                 if (err) {
                   res.status(err.status).json(err);
@@ -127,7 +126,7 @@ router.post('/', function (req, res) {
           return res.status(config.OK_STATUS).json(data);
         }
       }
-    ); 
+    );
   }
 });
 
@@ -144,11 +143,11 @@ router.get("/", async (req, res) => {
   user_id = req.userInfo.id;
   var resp_data = await playlist_helper.get_playlist_by_user_id(user_id);
   if (resp_data.status == 0) {
-      logger.error("Error occured while fetching Track = ", resp_data);
-      res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+    logger.error("Error occured while fetching Track = ", resp_data);
+    res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
   } else {
-      logger.trace("Artist got successfully = ", resp_data);
-      res.status(config.OK_STATUS).json(resp_data);
+    logger.trace("Artist got successfully = ", resp_data);
+    res.status(config.OK_STATUS).json(resp_data);
   }
 });
 
@@ -173,44 +172,44 @@ router.put('/:playlist_id', function (req, res) {
   user_id = req.userInfo.id;
   playlist_id = req.params.playlist_id;
   var schema = {
-   
+
   };
   req.checkBody(schema);
   var errors = req.validationErrors();
   if (!errors) {
-  var obj = {
+    var obj = {
       user_id: req.userInfo.id,
-      
+
     };
     if (req.body.name && req.body.name != null) {
       obj.name = req.body.name;
-   }
+    }
     if (req.body.description && req.body.description != null) {
       obj.description = req.body.description;
-   }
-		async.waterfall(
+    }
+    async.waterfall(
       [
-        function(callback) {
+        function (callback) {
           //image upload
           if (req.files && req.files["audio"]) {
             var file_path_array = [];
             // var files = req.files['images'];
             var files = [].concat(req.files.audio);
             var dir = "./uploads/playlist";
-             var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
+            var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
 
             // assuming openFiles is an array of file names
             async.eachSeries(
               files,
-              function(file, loop_callback) {
-								var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
+              function (file, loop_callback) {
+                var mimetype = ['audio/aac', 'audio/mp3', 'audio/mpeg'];
                 if (mimetype.indexOf(file.mimetype) != -1) {
                   if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                   }
                   extention = ".mp4";
                   filename = "audio_" + new Date().getTime() + extention;
-                  file.mv(dir + "/" + filename, function(err) {
+                  file.mv(dir + "/" + filename, function (err) {
                     if (err) {
                       logger.error("There was an issue in uploading audio");
                       loop_callback({
@@ -222,7 +221,7 @@ router.put('/:playlist_id', function (req, res) {
                         "image has been uploaded. Image name = ",
                         filename
                       );
-                      location =  filename;
+                      location = filename;
                       file_path_array.push(location);
                       loop_callback();
                     }
@@ -235,7 +234,7 @@ router.put('/:playlist_id', function (req, res) {
                   });
                 }
               },
-              function(err) {
+              function (err) {
                 // if any of the file processing produced an error, err would equal that error
                 if (err) {
                   res.status(err.status).json(err);
@@ -255,16 +254,16 @@ router.put('/:playlist_id', function (req, res) {
       async (err, file_path_array) => {
         //End image upload
         obj.audio = file_path_array;
-        let data = await playlist_helper.update_playlist(user_id,playlist_id,obj);
+        let data = await playlist_helper.update_playlist(user_id, playlist_id, obj);
         if (data.status === 0) {
           return res.status(config.BAD_REQUEST).json({ data });
         } else {
           return res.status(config.OK_STATUS).json(data);
         }
       }
-    ); 
-  
- }
+    );
+
+  }
 
 });
 

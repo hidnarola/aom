@@ -29,13 +29,13 @@ var fs = require('fs');
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.post("/", async (req, res) => {
-    var obj = {   
-     artist_id : req.userInfo.id
+    var obj = {
+        artist_id: req.userInfo.id
     };
     if (req.body.link && req.body.link != null) {
         obj.link = req.body.link;
     }
-   
+
     async.waterfall([
         function (callback) {
             if (req.files && req.files['image']) {

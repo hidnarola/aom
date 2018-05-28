@@ -72,6 +72,8 @@ router.post('/', async (req, res) => {
 
 
       var resp = await user_helper.get_user_by_id(obj.user_id);
+      console.log('resp', resp);
+
       no_comment = resp.user.no_of_comments + 1
       var resp_data = await user_helper.update_user_for_comments(obj.user_id, no_comment);
 

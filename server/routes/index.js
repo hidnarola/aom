@@ -47,7 +47,7 @@ router.post('/artist_registration', async (req, res) => {
       notEmpty: true,
       errorMessage: "social media is required"
     },
-    "music_type" :{
+    "music_type": {
       notEmpty: true,
       errorMessage: "Music Type is required"
     },
@@ -173,7 +173,6 @@ router.post('/artist_registration', async (req, res) => {
           res.status(config.BAD_REQUEST).json({ "status": 0, "message": "Artist's email already exist" });
         }
       }
-
     );
   } else {
     logger.error("Validation Error = ", errors);
@@ -333,45 +332,45 @@ router.post('/user_registration', async (req, res) => {
 
   logger.trace("API - Promoter signup called");
   logger.debug("req.body = ", req.body);
-    var schema = {
-      "social_media": {
-        notEmpty: true,
-        errorMessage: "social media is required"
-      },
-      "email": {
-        notEmpty: true,
-        errorMessage: "Email is required"
-      },
-      "password": {
-        notEmpty: true,
-        errorMessage: "password is required"
-      },
-      "confirm_password": {
-        notEmpty: true,
-        errorMessage: "confirm password is required"
-      },
-      "last_name": {
-        notEmpty: true,
-        errorMessage: "last name is required"
-      },
-      "first_name": {
-        notEmpty: true,
-        errorMessage: "first name is required"
-      },
-      "zipcode": {
-        notEmpty: true,
-        errorMessage: "zipcode is required"
-      },
-      "gender": {
-        notEmpty: true,
-        errorMessage: "Gender is required"
-      }
-  
-    };
+  var schema = {
+    "social_media": {
+      notEmpty: true,
+      errorMessage: "social media is required"
+    },
+    "email": {
+      notEmpty: true,
+      errorMessage: "Email is required"
+    },
+    "password": {
+      notEmpty: true,
+      errorMessage: "password is required"
+    },
+    "confirm_password": {
+      notEmpty: true,
+      errorMessage: "confirm password is required"
+    },
+    "last_name": {
+      notEmpty: true,
+      errorMessage: "last name is required"
+    },
+    "first_name": {
+      notEmpty: true,
+      errorMessage: "first name is required"
+    },
+    "zipcode": {
+      notEmpty: true,
+      errorMessage: "zipcode is required"
+    },
+    "gender": {
+      notEmpty: true,
+      errorMessage: "Gender is required"
+    }
+
+  };
   req.checkBody(schema);
   var errors = req.validationErrors();
   if (!errors) {
-   
+
     var obj = {
       "social_media": req.body.social_media,
       "email": req.body.email,
@@ -383,35 +382,35 @@ router.post('/user_registration', async (req, res) => {
       "zipcode": req.body.zipcode,
       "music_type": req.body.music_type
     };
-      user = await user_helper.get_user_by_email(req.body.email)
-      if (user.status === 2) {
+    user = await user_helper.get_user_by_email(req.body.email)
+    if (user.status === 2) {
 
-        var data = await user_helper.insert_user(obj);
+      var data = await user_helper.insert_user(obj);
 
-        if (data.status == 0) {
-          logger.trace("Error occured while inserting user - User Signup API");
-          logger.debug("Error = ", data.error);
-          res.status(config.INTERNAL_SERVER_ERROR).json(data);
-        } else {
-          logger.trace("User has been inserted");
-          // Send email confirmation mail to user
-          logger.trace("sending mail");
-          let mail_resp = await mail_helper.send("email_confirmation", {
-            "to": data.user.email,
-            "subject": "Music Social Voting - Email confirmation"
-          }, {
-              "confirm_url": config.website_url + "/email_confirm/" + data.user._id
-            });
-            if (mail_resp.status === 0) {
-            res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while sending confirmation email", "error": mail_resp.error });
-          } else {
-            res.status(config.OK_STATUS).json({ "status": 1, "message": "User registered successfully" });
-          }
-        }
+      if (data.status == 0) {
+        logger.trace("Error occured while inserting user - User Signup API");
+        logger.debug("Error = ", data.error);
+        res.status(config.INTERNAL_SERVER_ERROR).json(data);
       } else {
-        res.status(config.BAD_REQUEST).json({ "status": 0, "message": "User's email already exist" });
+        logger.trace("User has been inserted");
+        // Send email confirmation mail to user
+        logger.trace("sending mail");
+        let mail_resp = await mail_helper.send("email_confirmation", {
+          "to": data.user.email,
+          "subject": "Music Social Voting - Email confirmation"
+        }, {
+            "confirm_url": config.website_url + "/email_confirm/" + data.user._id
+          });
+        if (mail_resp.status === 0) {
+          res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while sending confirmation email", "error": mail_resp.error });
+        } else {
+          res.status(config.OK_STATUS).json({ "status": 1, "message": "User registered successfully" });
+        }
       }
     } else {
+      res.status(config.BAD_REQUEST).json({ "status": 0, "message": "User's email already exist" });
+    }
+  } else {
     logger.error("Validation Error = ", errors);
     res.status(config.BAD_REQUEST).json({ message: errors });
   }
@@ -480,7 +479,7 @@ router.get('/user_email_verify/:user_id', async (req, res) => {
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.post('/user_login', async (req, res) => {
- var schema = {
+  var schema = {
     'email': {
       notEmpty: true,
       errorMessage: "Email is required.",
@@ -808,24 +807,24 @@ router.post("/artist_by_filter", async (req, res) => {
   req.checkBody(schema);
   var errors = req.validationErrors();
 
-  if ( req.body.social_media) {
+  if (req.body.social_media) {
     filter.social_media = req.body.social_media;
   }
-  if ( req.body.first_name) {
+  if (req.body.first_name) {
     filter.first_name = req.body.first_name;
   }
-  if ( req.body.last_name) {
+  if (req.body.last_name) {
     filter.last_name = req.body.last_name;
   }
-  if ( req.body.music_type) {
+  if (req.body.music_type) {
     filter.music_type = new ObjectId(req.body.music_type);
   }
-  if ( req.body.gender) {
+  if (req.body.gender) {
     filter.gender = req.body.gender;
   }
   if (!errors) {
-     var resp_data = await artist_helper.get_all_artist(filter, req.body.page_no, req.body.page_size);
-     if (resp_data.status == 0) {
+    var resp_data = await artist_helper.get_all_artist(filter, req.body.page_no, req.body.page_size);
+    if (resp_data.status == 0) {
       logger.error("Error occured while fetching artist = ", resp_data);
       res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
     } else {
@@ -839,7 +838,7 @@ router.post("/artist_by_filter", async (req, res) => {
 });
 
 
- 
+
 /**
  * @api {post} /musics Get all tracks
  * @apiName Get all tracks
@@ -870,18 +869,18 @@ router.post("/musics", async (req, res) => {
   req.checkBody(schema);
   var errors = req.validationErrors();
 
-  if ( req.body.music_type) {
+  if (req.body.music_type) {
     filter.music_type = new ObjectId(req.body.music_type);
   }
-  if ( req.body.artist_id) {
+  if (req.body.artist_id) {
     filter.artist_id = new ObjectId(req.body.artist_id);
   }
-  if ( req.body.name) {
+  if (req.body.name) {
     filter.name = req.body.name;
   }
   if (!errors) {
-     var resp_data = await track_helper.get_all_audio(filter, req.body.page_no, req.body.page_size);
-     if (resp_data.status == 0) {
+    var resp_data = await track_helper.get_all_audio(filter, req.body.page_no, req.body.page_size);
+    if (resp_data.status == 0) {
       logger.error("Error occured while fetching music = ", resp_data);
       res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
     } else {
@@ -930,7 +929,7 @@ router.post('/login', async (req, res) => {
   var errors = req.validationErrors();
   if (!errors) {
 
-    let login_resp = await admin_helper.get_login_by_email(req.body.email,req.body.password);
+    let login_resp = await admin_helper.get_login_by_email(req.body.email, req.body.password);
     if (login_resp.status === 0) {
       res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Something went wrong while finding admin", "error": login_resp.error });
     } else if (login_resp.status === 1) {
@@ -1035,7 +1034,7 @@ router.post('/forgot_password', async (req, res) => {
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.post('/reset_password', async (req, res) => {
-  
+
   var schema = {
     'token': {
       notEmpty: true,
@@ -1119,7 +1118,7 @@ router.post('/super_admin_login', async (req, res) => {
   req.checkBody(schema);
   var errors = req.validationErrors();
   if (!errors) {
-    let login_resp = await super_admin_helper.get_login_by_email(req.body.email,req.body.password);
+    let login_resp = await super_admin_helper.get_login_by_email(req.body.email, req.body.password);
     if (login_resp.status === 0) {
       res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Something went wrong while finding admin", "error": login_resp.error });
     } else if (login_resp.status === 1) {

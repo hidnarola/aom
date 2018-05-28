@@ -33,17 +33,17 @@ var fs = require('fs');
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.post("/", async (req, res) => {
-  artist_id =req.userInfo.id;
-    var obj = {   
-     artist_id : req.userInfo.id
+    artist_id = req.userInfo.id;
+    var obj = {
+        artist_id: req.userInfo.id
     };
     if (req.body.name && req.body.name != null) {
         obj.name = req.body.name;
     }
     if (req.body.description && req.body.description != null) {
-      obj.description = req.body.description;
-  }
-   
+        obj.description = req.body.description;
+    }
+
     async.waterfall([
         function (callback) {
             if (req.files && req.files['audio']) {
@@ -69,54 +69,54 @@ router.post("/", async (req, res) => {
                 } else {
                     callback({ "status": config.MEDIA_ERROR_STATUS, "resp": { "status": 0, "message": "Invalid image format" } });
                 }
-            } 
+            }
             if (req.files && req.files['image']) {
-              logger.trace("Uploading avatar image");
-              var file = req.files['image'];
-              var dir = "./uploads/artist";
-              var mimetype = ["image/png", "image/jpeg", "image/jpg"];
+                logger.trace("Uploading avatar image");
+                var file = req.files['image'];
+                var dir = "./uploads/artist";
+                var mimetype = ["image/png", "image/jpeg", "image/jpg"];
 
-              if (mimetype.indexOf(file.mimetype) !== -1) {
-                  if (!fs.existsSync(dir)) {
-                      fs.mkdirSync(dir);
-                  }
-                  var extension = '.jpg';
-                  var filename1 = "image_" + new Date().getTime() + (Math.floor(Math.random() * 90000) + 10000) + extension;
-                  file.mv(dir + '/' + filename1, async (err) => {
-                      if (err) {
-                          logger.trace("There was an issue in uploading avatar image");
-                          callback({ "status": config.MEDIA_ERROR_STATUS, "resp": { "status": 0, "message": "There was an issue in uploading avatar image" } });
-                      } else {
-                          logger.trace("Avatar image has uploaded for user");
-                      }
-                  });
-              } else {
-                  callback({ "status": config.MEDIA_ERROR_STATUS, "resp": { "status": 0, "message": "Invalid image format" } });
-              }
-  callback(null,filename,filename1);
-          }
+                if (mimetype.indexOf(file.mimetype) !== -1) {
+                    if (!fs.existsSync(dir)) {
+                        fs.mkdirSync(dir);
+                    }
+                    var extension = '.jpg';
+                    var filename1 = "image_" + new Date().getTime() + (Math.floor(Math.random() * 90000) + 10000) + extension;
+                    file.mv(dir + '/' + filename1, async (err) => {
+                        if (err) {
+                            logger.trace("There was an issue in uploading avatar image");
+                            callback({ "status": config.MEDIA_ERROR_STATUS, "resp": { "status": 0, "message": "There was an issue in uploading avatar image" } });
+                        } else {
+                            logger.trace("Avatar image has uploaded for user");
+                        }
+                    });
+                } else {
+                    callback({ "status": config.MEDIA_ERROR_STATUS, "resp": { "status": 0, "message": "Invalid image format" } });
+                }
+                callback(null, filename, filename1);
+            }
             else {
                 callback(null, null);
             }
         }
 
-    ], async (err, filename,filename1) => {
+    ], async (err, filename, filename1) => {
         if (err) {
             res.status(err.status).json(err.resp);
         } else {
             if (filename) {
                 obj.audio = await filename;
-                obj.image =await filename1;
+                obj.image = await filename1;
             }
         }
         var resp = await track_helper.insert_track(artist_id, obj);
         if (resp.status === 0) {
             res.status(config.INTERNAL_SERVER_ERROR).json({ "error": resp.error });
         } else {
-           
+
             var resp = await artist_helper.get_artist_by_id(artist_id);
-            
-             no_track = resp.artist.no_of_tracks + 1
+
+            no_track = resp.artist.no_of_tracks + 1
             var resp_data = await track_helper.update_artist_for_track(artist_id, no_track);
             res.status(config.OK_STATUS).json({ "message": "Inserted successfully" });
         }
@@ -137,42 +137,42 @@ router.post("/", async (req, res) => {
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.get('/', async (req, res) => {
-  artist_id=req.userInfo.id;
+    artist_id = req.userInfo.id;
 
-  var track = await track_helper.get_all_track_of_artist(artist_id);
+    var track = await track_helper.get_all_track_of_artist(artist_id);
 
-  if ( track.status === 1 ) {
-      logger.trace("got details successfully");
-      res.status(config.OK_STATUS).json({ "status": 1, "track": track});
-  } else {
-      logger.error("Error occured while fetching = ", track);
-      res.status(config.INTERNAL_SERVER_ERROR).json(track);
-  }
+    if (track.status === 1) {
+        logger.trace("got details successfully");
+        res.status(config.OK_STATUS).json({ "status": 1, "track": track });
+    } else {
+        logger.error("Error occured while fetching = ", track);
+        res.status(config.INTERNAL_SERVER_ERROR).json(track);
+    }
 });
 
 
 router.post('/votes_by_day', async (req, res) => {
-    var resp_day = await vote_track_helper.get_artist_vote_by_day(req.userInfo.id,req.body.day);
-    var resp_gender = await vote_track_helper.get_artist_vote_by_gender(req.userInfo.id,req.body.day);
-    var resp_track = await vote_track_helper.get_artist_vote_by_track(req.userInfo.id,req.body.day);
+    var resp_day = await vote_track_helper.get_artist_vote_by_day(req.userInfo.id, req.body.day);
+    var resp_gender = await vote_track_helper.get_artist_vote_by_gender(req.userInfo.id, req.body.day);
+    var resp_track = await vote_track_helper.get_artist_vote_by_track(req.userInfo.id, req.body.day);
 
     if (resp_day.status === 0 && resp_gender === 0 && resp_rack === 0) {
-        res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while finding vote", "error":resp_day.error });
+        res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while finding vote", "error": resp_day.error });
     } else if (resp_day.status === 2) {
         res.status(config.BAD_REQUEST).json({ "status": 0, "message": "Not available" });
     } else {
-        res.status(config.OK_STATUS).json({ "status": 1, "message": "Vote found","day" : resp_day.results,"gender" : resp_gender.results,"track" : resp_track.results});
+        res.status(config.OK_STATUS).json({ "status": 1, "message": "Vote found", "day": resp_day.results, "gender": resp_gender.results, "track": resp_track.results });
     }
 });
 
 router.post('/downloaded_track', async (req, res) => {
-    artist_id=req.userInfo.id;
-  
+    artist_id = req.userInfo.id;
+
     var track = await download_helper.get_all_track_by_id(artist_id);
-    var resp_day = await download_helper.get_downloads_by_day(req.userInfo.id,req.body.day);
-    if ( track.status === 1 && resp_day.status ===1) {
+    var resp_day = await download_helper.get_downloads_by_day(req.userInfo.id, req.body.day);
+    if (track.status === 1 && resp_day.status === 1) {
         logger.trace("got details successfully");
-        res.status(config.OK_STATUS).json({ "status": 1, "track": track.track, "day" : resp_day.results});
+        res.status(config.OK_STATUS).json({ "status": 1, "track": track.track, "day": resp_day.results });
     } else {
         logger.error("Error occured while fetching = ", track);
         res.status(config.INTERNAL_SERVER_ERROR).json(track);
