@@ -166,7 +166,16 @@ router.put('/', function (req, res) {
 });
 
 
-
+/**
+ * @api {get} /artist/ Artist Analytics detail - Get 
+ * @apiName Artist Analytics detail- Get
+ * @apiGroup Artist
+ *
+ * @apiHeader {String}  x-access-token unique access-key
+ *
+ * @apiSuccess (Success 200) {Array} artist detail analytics as per id
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post('/', async (req, res) => {
     var resp_gender = await follower_helper.get_artist_followers_by_gender(req.userInfo.id, req.body.day);
     var resp_day = await follower_helper.get_artist_followers_by_day(req.userInfo.id, req.body.day);
@@ -181,7 +190,16 @@ router.post('/', async (req, res) => {
 });
 
 
-
+/**
+ * @api {get} /artist/track_likes Artist track likes detail - Get 
+ * @apiName Artist track likes detail- Get
+ * @apiGroup Artist
+ *
+ * @apiHeader {String}  x-access-token unique access-key
+ *
+ * @apiSuccess (Success 200) {Array} artist track likes detail as per id
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.get('/track_likes', async (req, res) => {
     artist_id = req.userInfo.id;
 
@@ -198,6 +216,16 @@ router.get('/track_likes', async (req, res) => {
 
 
 
+/**
+ * @api {get} /artist/track_comment Artist track likes comments - Get 
+ * @apiName Artist track comments detail- Get
+ * @apiGroup Artist
+ *
+ * @apiHeader {String}  x-access-token unique access-key
+ *
+ * @apiSuccess (Success 200) {Array} artist track comments detail as per id
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.get('/track_comment', async (req, res) => {
     artist_id = req.userInfo.id;
     var comment = await comment_helper.get_all_comment_by_track(artist_id);
@@ -210,12 +238,26 @@ router.get('/track_comment', async (req, res) => {
     }
 });
 
+
+/**
+ * @api {post} /artist/participate   Participate in Competition- Add
+ * @apiName   Participate in Competition
+ * @apiGroup Artist
+
+ * @apiHeader {String}  Content-Type multipart/form-data
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} contest_id Contest id of contest 
+ *
+ * @apiSuccess (Success 200) {JSON} artist participate details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post("/participate", async (req, res) => {
     var schema = {
 
         "contest_id": {
             notEmpty: true,
-            errorMessage: "Music Type is required"
+            errorMessage: "Contest Id is required"
         },
 
     };
@@ -236,7 +278,7 @@ router.post("/participate", async (req, res) => {
             if (resp_data.status == 0) {
                 logger.error("Error occured while inserting = ", resp_data);
                 res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
-                
+
             } else
 
                 var resp_data = await contest_helper.get_contest_by_id(obj.contest_id);

@@ -43,10 +43,10 @@ var super_admin_helper = require('./../helpers/super_admin_helper');
  */
 router.post('/artist_registration', async (req, res) => {
   var schema = {
-    "social_media": {
-      notEmpty: true,
-      errorMessage: "social media is required"
-    },
+    /*   "social_media": {
+         notEmpty: true,
+         errorMessage: "social media is required"
+       },*/
     "music_type": {
       notEmpty: true,
       errorMessage: "Music Type is required"
@@ -333,9 +333,13 @@ router.post('/user_registration', async (req, res) => {
   logger.trace("API - Promoter signup called");
   logger.debug("req.body = ", req.body);
   var schema = {
-    "social_media": {
+    /*  "social_media": {
+        notEmpty: true,
+        errorMessage: "social media is required"
+      },*/
+    "music_type": {
       notEmpty: true,
-      errorMessage: "social media is required"
+      errorMessage: "Music Type is required"
     },
     "email": {
       notEmpty: true,

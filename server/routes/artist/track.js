@@ -151,6 +151,16 @@ router.get('/', async (req, res) => {
 });
 
 
+
+
+/**
+ * @api {post} /artist/track/votes_by_day Get all artist vote by day
+ * @apiName Get all artist vote by day
+ * @apiGroup Root
+ * @apiParam {Number} day Vote day
+ * @apiSuccess (Success 200) {Array} artist Array of artist vote document
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ **/
 router.post('/votes_by_day', async (req, res) => {
     var resp_day = await vote_track_helper.get_artist_vote_by_day(req.userInfo.id, req.body.day);
     var resp_gender = await vote_track_helper.get_artist_vote_by_gender(req.userInfo.id, req.body.day);
@@ -165,6 +175,15 @@ router.post('/votes_by_day', async (req, res) => {
     }
 });
 
+
+/**
+ * @api {post} /artist/track/downloaded_track Get all number of downloaded tracks by day
+ * @apiName  Get all number of downloaded tracks by day
+ * @apiGroup Root
+ * @apiParam {Number} day download on day
+ * @apiSuccess (Success 200) {Array} artist Array of artist downloaded track document
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ **/
 router.post('/downloaded_track', async (req, res) => {
     artist_id = req.userInfo.id;
 

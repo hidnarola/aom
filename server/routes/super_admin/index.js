@@ -125,7 +125,20 @@ router.post("/add_permission", async (req, res) => {
 });
 
 
-// add contest
+
+/**
+ * @api {post} /super_admin/add_contest Add Contest
+ * @apiName Add Contest
+ * @apiGroup Super Admin
+
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} name Contest Name
+ 
+ * @apiSuccess (Success 200) {JSON} Contest details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post("/add_contest", async (req, res) => {
   var schema = {
     "name": {
@@ -177,7 +190,17 @@ router.post("/add_contest", async (req, res) => {
 });
 
 
-//get all participant
+
+/**
+ * @api {get} /super_admin/add_contest   Contest detail with total participant - Get 
+ * @apiName Contest detail with total participant - Get
+ * @apiGroup Super Admin
+ *
+ * @apiHeader {String}  x-access-token unique access-key
+ *
+ * @apiSuccess (Success 200) {Array} contect detail 
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.get('/contest', async (req, res) => {
   var contest = await contest_helper.get_all_contest_and_participant();
   if (contest.status === 1) {
@@ -213,68 +236,6 @@ router.delete('/:artist_id', async (req, res) => {
 });
 
 
-/**
- * @api {post} /super_admin/list_users Get all Users
- * @apiName Get all Users
- * @apiGroup Super Admin
- * @apiParam {Number} page_no Page Number
- * @apiParam {Number} page_size Page Size
- * @apiParam {String} gender Gender for filter
- * @apiParam {String} first_name First Name for filter
- * @apiParam {String} last_name Last Name for filter
- * @apiSuccess (Success 200) {Array} users Array of users document
- * @apiError (Error 4xx) {String} message Validation or error message.
- */
-router.post("/list_users", async (req, res) => {
-
-  var filter = {};
-  var page_no = {};
-  var page_size = {};
-
-  var schema = {
-    /*  "page_no": {
-        notEmpty: true,
-        errorMessage: "page_no is required"
-      },
-      "page_size": {
-        notEmpty: true,
-        errorMessage: "page_size is required"
-      }*/
-  };
-
-  /*if (req.body.gender) {
-    filter.gender = req.body.gender;
-  }
-  if (req.body.first_name) {
-    filter.first_name = req.body.first_name;
-  }
-  if (req.body.last_name) {
-    filter.last_name = req.body.last_name;
-  }*/
-  if (typeof req.body.filter != "undefined") {
-    filter["first_name"] = req.body.filter;
-  }
-  if (typeof req.body.filter != "undefined") {
-    filter["last_name"] = req.body.filter;
-  }
-  req.checkBody(schema);
-  var errors = req.validationErrors();
-  if (!errors) {
-    var resp_data = await user_helper.get_users_by_filter(filter, req.body.page_no, req.body.page_size);
-    if (resp_data.status == 0) {
-      logger.error("Error occured while fetching users = ", resp_data);
-      res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
-    } else {
-      logger.trace("music got successfully = ", resp_data);
-      res.status(config.OK_STATUS).json(resp_data);
-    }
-  } else {
-    logger.error("Validation Error = ", errors);
-    res.status(config.BAD_REQUEST).json({ message: errors });
-  }
-});
-
-
 
 /**
  * @api {delete} /super_admin/:user_id Delete User  
@@ -298,6 +259,22 @@ router.delete('/:user_id', async (req, res) => {
   }
 });
 
+
+
+
+/**
+ * @api {post} /super_admin/home Get Artist Details with the day-Get
+ * @apiName Artist Details with the day-Get
+ * @apiGroup Super Admin
+
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} day Artist day
+ 
+ * @apiSuccess (Success 200) {JSON} Artist details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post("/home", async (req, res) => {
 
   var resp_data = await artist_helper.get_all_track_of_artist();
@@ -315,27 +292,39 @@ router.post("/home", async (req, res) => {
   }
 });
 
+
+
+
+
+/**
+ * @api {post} /super_admin/get_artist  Get Artist Details with the day and other filter-Get
+ * @apiName  Get Artist Details with the day and other filter-Get
+ * @apiGroup Super Admin
+
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} day Artist day
+ * @apiParam {String} location Artist location
+ * @apiParam {String} music_type Artist Music Type
+ * @apiParam {String} search Artist Search by name 
+ 
+ * @apiSuccess (Success 200) {JSON} Artist details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post("/get_artist", async (req, res) => {
-
   var filter = {};
-
-
   if (req.body.location) {
     filter.location = req.body.location;
   }
-
   if (req.body.music_type) {
     filter.music_type = new ObjectId(req.body.music_type);
   }
-
-
-
   if (req.body.search) {
     var r = new RegExp(req.body.search);
     var search = { "$regex": r, "$options": "i" };
     filter.first_name = search;
   }
-
   var resp_data = await artist_helper.get_all_active_and_suspend_artist(filter);
   if (resp_data.status == 0) {
     logger.error("Error occured while fetching artist = ", resp_data);
@@ -347,11 +336,22 @@ router.post("/get_artist", async (req, res) => {
 });
 
 
+/**
+ * @api {post} /suspend/artist/:artist_id  Suspend Artist
+ * @apiName Suspend Artist
+ * @apiGroup Super Admin
 
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} artist_id Artist Id
+e 
+ 
+ * @apiSuccess (Success 200) {JSON} Artist details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post("/suspend/artist/:artist_id", async (req, res) => {
-
   var resp = await artist_helper.get_artist_by_id(req.params.artist_id);
-
   if (resp.status == 0) {
     logger.error("Error occured while fetching artist = ", resp);
     res.status(config.INTERNAL_SERVER_ERROR).json(resp);
@@ -368,16 +368,25 @@ router.post("/suspend/artist/:artist_id", async (req, res) => {
     res.status(config.OK_STATUS).json({ "artist": artist_resp });
 
   }
-
-
-
-
 });
 
+
+/**
+ * @api {post} /suspend/artist/:user_id  Suspend User
+ * @apiName Suspend User
+ * @apiGroup Super Admin
+
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} user_id User Id
+e 
+ 
+ * @apiSuccess (Success 200) {JSON} User details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post("/suspend/user/:user_id", async (req, res) => {
-
   var resp = await user_helper.get_user_by_id(req.params.user_id);
-
   if (resp.status == 0) {
     logger.error("Error occured while fetching artist = ", resp);
     res.status(config.INTERNAL_SERVER_ERROR).json(resp);
@@ -397,23 +406,33 @@ router.post("/suspend/user/:user_id", async (req, res) => {
 
 
 
-router.post("/get_user", async (req, res) => {
+/**
+ * @api {post} /super_admin/get_user  Get User Details with the day and other filter-Get
+ * @apiName  Get User Details with the day and other filter-Get
+ * @apiGroup Super Admin
 
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} day User day
+ * @apiParam {String} search User Search by name 
+ 
+ * @apiSuccess (Success 200) {JSON} User details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
+router.post("/get_user", async (req, res) => {
   var filter = {};
   if (req.body.location) {
     filter.location = req.body.location;
   }
-
   if (req.body.music_type) {
     filter.music_type = new ObjectId(req.body.music_type);
   }
-
   if (req.body.search) {
     var r = new RegExp(req.body.search);
     var search = { "$regex": r, "$options": "i" };
     filter.first_name = search;
   }
-
   var resp_data = await user_helper.get_all_active_and_suspend_user(filter);
   if (resp_data.status == 0) {
     logger.error("Error occured while fetching artist = ", resp_data);
@@ -422,6 +441,5 @@ router.post("/get_user", async (req, res) => {
     logger.trace("artist got successfully = ", { "artist": resp_data });
     res.status(config.OK_STATUS).json({ "artist": resp_data });
   }
-
 });
 module.exports = router;

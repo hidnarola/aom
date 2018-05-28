@@ -89,7 +89,20 @@ router.get("/purchased", async (req, res) => {
 });
 
 
+/**
+ * @api {post} /user/track/vote_track Vote for Artist Track Add
+ * @apiName Vote for Artist Track - Add
+ * @apiGroup User
 
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} artist_id Artist id of artist
+ * @apiParam {String} Track_id track id of artist
+ *
+ * @apiSuccess (Success 200) {JSON} vote details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post('/vote_track', async (req, res) => {
   user_id = req.userInfo.id;
   var schema = {
@@ -144,8 +157,23 @@ router.post('/vote_track', async (req, res) => {
 });
 
 
+/**
+ * @api {post} /user/artist/like_track Like  Artist Track Add
+ * @apiName Like Artist Track - Add
+ * @apiGroup User
 
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+ * 
+ * @apiParam {String} artist_id Artist id of artist
+ * @apiParam {String} Track_id track id of artist
+ *
+ * @apiSuccess (Success 200) {JSON} like details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.post('/like_track', async (req, res) => {
+  console.log('1');
+
   user_id = req.userInfo.id;
   var schema = {
     "track_id": {
@@ -179,8 +207,8 @@ router.post('/like_track', async (req, res) => {
       if (data && data.status == 0) {
         logger.error("Error occured while voting = ", data);
         res.status(config.INTERNAL_SERVER_ERROR).json(data);
-      } else
 
+      } else
         var resp_data = await like_helper.get_all_track_by_track_id(obj.track_id);
       no_vote = resp_data.like[0].no_of_likes + 1;
       var resp_data = await like_helper.update_likes(obj.track_id, no_vote);
@@ -209,7 +237,19 @@ router.post('/like_track', async (req, res) => {
 });
 
 
+/**
+ * @api {get} /user/track/:track_id/download Download  Artist Track Add
+ * @apiName Download Artist Track - Add
+ * @apiGroup User
 
+ * @apiHeader {String}  Content-Type application/json
+ * @apiHeader {String}  x-access-token  unique access-key
+
+ * @apiParam {String} Track_id track id of artist
+ *
+ * @apiSuccess (Success 200) {JSON} download details
+ * @apiError (Error 4xx) {String} message Validation or error message.
+ */
 router.get('/:track_id/download', async (req, res) => {
   try {
     var obj = {
