@@ -42,6 +42,7 @@ var music_helper = require('./../helpers/music_helper');
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.post('/artist_registration', async (req, res) => {
+
   var schema = {
     "music_type": {
       notEmpty: true,
@@ -86,83 +87,40 @@ router.post('/artist_registration', async (req, res) => {
       "music_type": req.body.music_type
     };
 
-    async.waterfall(
-      [
-        function (callback) {
-          //image upload
-          if (req.files && req.files["image"]) {
-            var file_path_array = [];
-            // var files = req.files['images'];
-            var file = req.files.image;
-            var dir = "./uploads/artist";
-            var mimetype = ["image/png", "image/jpeg", "image/jpg"];
+    let artist = await artist_helper.get_artist_by_email(req.body.email)
+    if (artist.status === 2) {
 
-            // assuming openFiles is an array of file names
+      var obj = {}
+      var data = await artist_helper.insert_artist(reg_obj);
+      //var datas = await artist_helper.insert_notification(obj);
 
-            if (mimetype.indexOf(file.mimetype) != -1) {
-              logger.trace("Uploading image");
-              if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
-              }
+      if (data.status == 0) {
+        logger.debug("Error = ", data.error);
+        res.status(config.INTERNAL_SERVER_ERROR).json(data);
+      } else {
+        logger.trace("Artist has been inserted");
 
-              extension = ".jpg";
-              filename = "image_" + new Date().getTime() + extension;
-              file.mv(dir + '/' + filename, function (err) {
-                if (err) {
-                  logger.trace("Problem in uploading image");
-                  callback({ "status": config.MEDIA_ERROR_STATUS, "err": "There was an issue in uploading image" });
-                } else {
-                  logger.trace("Image uploaded");
-                  callback(null, filename);
-                }
-              });
-            } else {
-              logger.trace("Invalid image format");
-              callback({ "status": config.VALIDATION_FAILURE_STATUS, "err": "Image format is invalid" });
-            }
-          } else {
-            logger.trace("Avatar is not available");
-            callback(null, null);
-          }
-        }
-      ],
-      async (err, filename) => {
-        //End image upload
+        logger.trace("sending mail");
 
-        if (filename) {
-          reg_obj.image = filename;
-        }
-
-        let artist = await artist_helper.get_artist_by_email(req.body.email)
-        if (artist.status === 2) {
-
-          var obj = {}
-          var data = await artist_helper.insert_artist(reg_obj);
-          // var datas = await artist_helper.insert_notification(obj);
-
-          if (data.status == 0) {
-            logger.debug("Error = ", data.error);
-            res.status(config.INTERNAL_SERVER_ERROR).json(data);
-          } else {
-            logger.trace("Artist has been inserted");
-
-            if (mail_resp.status === 0) {
-              res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while sending confirmation email", "error": mail_resp.error });
-            } else {
-              res.status(config.OK_STATUS).json({ "status": 1, "message": "Artist registered successfully" });
-            }
-          }
+        let mail_resp = await mail_helper.send("email_confirmation", {
+          "to": data.artist.email,
+          "subject": "Music Social Voting - Email confirmation"
+        });
+        if (mail_resp.status === 0) {
+          res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while sending confirmation email", "error": mail_resp.error });
         } else {
-          res.status(config.BAD_REQUEST).json({ "status": 0, "message": "Artist's email already exist" });
+          res.status(config.OK_STATUS).json({ "status": 1, "message": "Artist registered successfully" });
         }
       }
-    );
-  } else {
+    } else {
+      res.status(config.BAD_REQUEST).json({ "status": 0, "message": "Artist's email already exist" });
+    }
+  }
+  else {
     logger.error("Validation Error = ", errors);
     res.status(config.BAD_REQUEST).json({ message: errors });
   }
 });
-
 
 
 /**
