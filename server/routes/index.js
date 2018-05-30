@@ -34,7 +34,7 @@ var super_admin_helper = require('./../helpers/super_admin_helper');
  * @apiParam {String} first_name First Name
  * @apiParam {String} zipcode Zipcode
  * @apiParam {String} gender Gender
- * @apiParam {File} image Image
+
 
  * 
  * @apiSuccess (Success 200) {String} message Success message
@@ -76,15 +76,13 @@ router.post('/artist_registration', async (req, res) => {
   var errors = req.validationErrors();
   if (!errors) {
     var reg_obj = {
-      "social_media": req.body.social_media,
       "email": req.body.email,
       "gender": req.body.gender,
       "password": req.body.password,
-      "confirm_password": req.body.confirm_password,
       "first_name": req.body.first_name,
       "last_name": req.body.last_name,
       "zipcode": req.body.zipcode,
-      "music_type": JSON.parse(req.body.music_type)
+      "music_type": req.body.music_type
     };
 
     async.waterfall(
