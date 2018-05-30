@@ -11,6 +11,7 @@ var vote_track_helper = require('../../helpers/vote_track_helper');
 var track_helper = require('../../helpers/track_helper');
 var artist_helper = require('../../helpers/artist_helper');
 var user_helper = require('../../helpers/user_helper');
+var mail_helper = require('../../helpers/mail_helper');
 
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
@@ -60,6 +61,8 @@ router.post('/follow', async (req, res) => {
       var resp_data = await track_helper.update_artist_for_followers(obj.artist_id, no_follow);
 
       var response = await user_helper.get_user_by_id(obj.user_id);
+      console.log('response', response);
+
       no_follow = response.user.no_of_followers + 1
       var resp_data = await user_helper.update_user_for_followers(obj.user_id, no_follow);
 
