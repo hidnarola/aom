@@ -16,6 +16,7 @@ var user_helper = require('./../helpers/user_helper');
 var track_helper = require('./../helpers/track_helper');
 var admin_helper = require('./../helpers/admin_helper');
 var super_admin_helper = require('./../helpers/super_admin_helper');
+var music_helper = require('./../helpers/music_helper');
 
 /**
  * @api {post} /artist_registration Artist Registration
@@ -34,7 +35,7 @@ var super_admin_helper = require('./../helpers/super_admin_helper');
  * @apiParam {String} first_name First Name
  * @apiParam {String} zipcode Zipcode
  * @apiParam {String} gender Gender
- * @apiParam {File} image Image
+
 
  * 
  * @apiSuccess (Success 200) {String} message Success message
@@ -76,11 +77,9 @@ router.post('/artist_registration', async (req, res) => {
   var errors = req.validationErrors();
   if (!errors) {
     var reg_obj = {
-      "social_media": req.body.social_media,
       "email": req.body.email,
       "gender": req.body.gender,
       "password": req.body.password,
-      "confirm_password": req.body.confirm_password,
       "first_name": req.body.first_name,
       "last_name": req.body.last_name,
       "zipcode": req.body.zipcode,
@@ -139,7 +138,7 @@ router.post('/artist_registration', async (req, res) => {
 
           var obj = {}
           var data = await artist_helper.insert_artist(reg_obj);
-          var datas = await artist_helper.insert_notification(obj);
+          // var datas = await artist_helper.insert_notification(obj);
 
           if (data.status == 0) {
             logger.debug("Error = ", data.error);
@@ -147,14 +146,6 @@ router.post('/artist_registration', async (req, res) => {
           } else {
             logger.trace("Artist has been inserted");
 
-            logger.trace("sending mail");
-
-            let mail_resp = await mail_helper.send("email_confirmation", {
-              "to": data.artist.email,
-              "subject": "Music Social Voting - Email confirmation"
-            }, {
-                "confirm_url": config.website_url + "/email_confirm/" + data.artist._id
-              });
             if (mail_resp.status === 0) {
               res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while sending confirmation email", "error": mail_resp.error });
             } else {
@@ -1141,6 +1132,15 @@ router.post('/super_admin_login', async (req, res) => {
 });
 
 
-
+router.get("/music_type", async (req, res) => {
+  var resp_data = await music_helper.get_all_music_type();
+  if (resp_data.status == 0) {
+    logger.error("Error occured while fetching music = ", resp_data);
+    res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+  } else {
+    logger.trace("Music got successfully = ", resp_data);
+    res.status(config.OK_STATUS).json(resp_data);
+  }
+});
 
 module.exports = router;
