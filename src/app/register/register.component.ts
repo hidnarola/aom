@@ -24,18 +24,98 @@ export class RegisterComponent implements OnInit {
       'sound_cloud' : ''
     }
   };
+  public listener_data : any = {
+    'music_type' : []
+  };
   public user_data : any = {};
   public location : any = '';
+  public day : any = [];
+  public month : any = [];
+  public year : any = [];
   imageChangedEvent: any = '';
   croppedImage: any = '';
   cropperReady = false;
   
+  // Artist From Group for validation
   artist_step1 : FormGroup;
   artist_step2 : FormGroup;
   passwordFormGroup: FormGroup;
+  passwordFormGroup1: FormGroup;
   artist_step3 : FormGroup;
   artist_step4 : FormGroup;
 
+  // Listener Form Group for validation
+  listener_step1 : FormGroup;
+  listener_step2 : FormGroup;
+  listener_step3 : FormGroup;
+  listener_step4 : FormGroup;
+
+  constructor(private fb: FormBuilder, private RegisterService : RegisterService) {
+    this.artist_cnt = 0;
+    this.listner_cnt = 0;
+    this.day = [];
+    this.month = [];
+    this.year = [];
+    for(let i = 1; i<= 31; i++ ) {
+      this.day.push(i);
+    }
+    for(let i = 1; i<= 12; i++ ) {
+      this.month.push(i);
+    }
+    for(let i = 1900; i<= (new Date()).getFullYear(); i++ ) {
+      this.year.push(i);
+    }
+    this.artist_step1 = this.fb.group({
+      terms_condtion : ['', Validators.required]
+    });
+    this.passwordFormGroup1 = this.fb.group({
+      artist_password: ['', Validators.minLength(6)],
+      artist_conf: ['',  Validators.minLength(6)]
+    }, {
+      validator : this.passwordMatchValidator
+    });
+    this.passwordFormGroup = this.fb.group({
+      password: ['', Validators.minLength(6)],
+      conf: ['',  Validators.minLength(6)]
+    }, {
+      validator : this.passwordMatchValidatorListener
+    });
+    this.artist_step2 = this.fb.group({
+      'email' : ['', [Validators.required, Validators.email]],
+      passwordFormGroup1 : this.passwordFormGroup1
+    });
+    this.artist_step3 = this.fb.group({
+      fname : ['', [Validators.required]],
+      lname : ['', [Validators.required]],
+      gender : []
+    });
+    this.artist_step4 = this.fb.group({
+      zipcode : ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
+    });
+
+    this.listener_step1 = this.fb.group({
+      email : ['', [Validators.required, Validators.email]],
+      passwordFormGroup : this.passwordFormGroup
+    });
+
+    this.listener_step2 = this.fb.group({
+      terms_condtion : ['', Validators.required]
+    });
+
+    this.listener_step3 = this.fb.group({
+      fname : ['', [Validators.required]],
+      lname : ['', [Validators.required]],
+      day : ['', [Validators.required]],
+      month : ['', [Validators.required]],
+      year : ['', [Validators.required]]
+    });
+
+    this.listener_step4 = this.fb.group({
+      zipcode : ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
+    });
+   }
+  
+  // Code for initialize google login button
   public googleInit() {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
@@ -46,6 +126,8 @@ export class RegisterComponent implements OnInit {
       this.attachSignin(document.getElementById('googleBtn'));
     });
   }
+
+  // Code for open google signin popup and do login
   public attachSignin(element) {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {
@@ -63,37 +145,15 @@ export class RegisterComponent implements OnInit {
       });
   }
 
-  constructor(private fb: FormBuilder, private RegisterService : RegisterService) {
-    this.artist_cnt = 0;
-    this.listner_cnt = 0;
-    this.artist_step1 = this.fb.group({
-      terms_condtion : ['', Validators.required]
-    });
-    this.passwordFormGroup = this.fb.group({
-      password: ['', Validators.minLength(6)],
-      conf: ['',  Validators.minLength(6)]
-    }, {
-      validator : this.passwordMatchValidator
-    });
-    this.artist_step2 = this.fb.group({
-      'email' : ['', [Validators.required, Validators.email]],
-      passwordFormGroup : this.passwordFormGroup
-    });
-    this.artist_step3 = this.fb.group({
-      fname : ['', [Validators.required]],
-      lname : ['', [Validators.required]],
-      gender : []
-    });
-    this.artist_step4 = this.fb.group({
-      zipcode : ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
-    });
-   }
-
   ngOnInit() {
     this.googleInit();
   }
 
   passwordMatchValidator(g: FormGroup) {
+      return g.get('artist_password').value === g.get('artist_conf').value ? null : g.get('artist_conf').setErrors({'mismatch': true});
+  }
+
+  passwordMatchValidatorListener(g: FormGroup) {
       return g.get('password').value === g.get('conf').value ? null : g.get('conf').setErrors({'mismatch': true});
   }
   // get location details based on zipcode
@@ -115,14 +175,43 @@ export class RegisterComponent implements OnInit {
       this.location = '';
     }
   }
+  // get location details based on zipcode for listener
+  getLocationForListener() {
+    if(this.listener_data['zipcode']) {
+      this.RegisterService.getLocationFromZipCode(this.listener_data['zipcode']).subscribe(response => {
+        const res =  JSON.parse(response['_body']);
+        if(res['results'].length > 0 && res['results'][0].hasOwnProperty('address_components')) {
+          if(res['results'][0]['address_components'].length > 3) {
+            this.location = res['results'][0]['address_components'][1]['long_name']+', '+res['results'][0]['address_components'][3]['long_name']
+          } else if (res['results'][0]['address_components'].length > 2) {
+            this.location = res['results'][0]['address_components'][1]['long_name']+', '+res['results'][0]['address_components'][2]['long_name']
+          }
+        } else {
+          this.location = '';
+        }
+      });
+    } else {
+      this.location = '';
+    }
+  }
 
-  // manage music type selection
+  // manage music type selection for artist
   onChange(type:string, isChecked: boolean) {  
     if(isChecked) {
       this.artist_data.music_type.push(type);
     } else {
       let index = this.artist_data.music_type.findIndex(x => x == type)
       this.artist_data.music_type.splice(index, 1);
+    }
+  }
+
+  // manage music type selection for artist
+  onChangeForListener(type:string, isChecked: boolean) {  
+    if(isChecked) {
+      this.listener_data.music_type.push(type);
+    } else {
+      let index = this.listener_data.music_type.findIndex(x => x == type)
+      this.listener_data.music_type.splice(index, 1);
     }
   }
 
@@ -140,7 +229,34 @@ export class RegisterComponent implements OnInit {
   }
   // Handle submit event of artist form
   artist_submit() {
-    console.log('Fianl data', this.artist_data);
+    let data = {
+      email : this.artist_data['email'],
+      password : this.artist_data['password'],
+      first_name : this.artist_data['fname'],
+      last_name : this.artist_data['lname'],
+      zipcode : this.artist_data['zipcode'],
+      gender : this.artist_data['gender'],
+      music_type : this.artist_data['music_type']
+    };
+    console.log('artist', data);
+    this.RegisterService.artistRegistration(data).subscribe(response => {
+      console.log('response', response);
+    });
+  }
+  // Handle submit event of listener form
+  listener_submit() {
+    let data = {
+      email : this.listener_data['email'],
+      password : this.listener_data['password'],
+      first_name : this.listener_data['fname'],
+      last_name : this.listener_data['lname'],
+      zipcode : this.listener_data['zipcode'],
+      music_type : this.listener_data['music_type']
+    };
+    console.log('listener', data);
+    this.RegisterService.listenerRegistration(data).subscribe(response => {
+      console.log('response', response);
+    });
   }
 
   public nxt_btn(step_lbl) {

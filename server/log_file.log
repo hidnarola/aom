@@ -1,0 +1,248 @@
+[2018-05-30T13:00:12.448] [TRACE] development - Avatar is not available
+[2018-05-30T13:00:12.634] [DEBUG] development - Error =  { ValidationError: artist validation failed: music_type: Cast to Array failed for value "[ 'Hip Hop', 'R&B' ]" at path "music_type", confirm_password: Path `confirm_password` is required.
+    at ValidationError.inspect (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validation.js:56:24)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:195:12)
+    at Object.inspect (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:36:66)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:257:18)
+    at formatLogData (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:55:22)
+    at basicLayout (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:118:7)
+    at app (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\appenders\file.js:55:18)
+    at appenders.forEach (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:142:5)
+    at Array.forEach (<anonymous>)
+    at Logger.sendLogEventToAppender [as dispatch] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:141:13)
+    at Logger._log (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:95:12)
+    at Logger.(anonymous function) [as debug] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:127:14)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:145:20)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+  errors: 
+   { music_type: 
+      { CastError: Cast to Array failed for value "[ 'Hip Hop', 'R&B' ]" at path "music_type"
+    at new CastError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\cast.js:27:11)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:824:7)
+    at model._handleIndex (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:645:14)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:606:22)
+    at model.Document (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:111:12)
+    at model.Model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:62:12)
+    at new model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:3776:13)
+    at Object.artist_helper.insert_artist (e:\Angular5_projects\project\aom\server\helpers\artist_helper.js:21:15)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:141:42)
+    at <anonymous>
+        message: 'Cast to Array failed for value "[ \'Hip Hop\', \'R&B\' ]" at path "music_type"',
+        name: 'CastError',
+        stringValue: '"[ \'Hip Hop\', \'R&B\' ]"',
+        kind: 'Array',
+        value: [Array],
+        path: 'music_type',
+        reason: [MongooseError] },
+     confirm_password: 
+      { ValidatorError: Path `confirm_password` is required.
+    at new ValidatorError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validator.js:25:11)
+    at validate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:805:13)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:854:11
+    at Array.forEach (<anonymous>)
+    at SchemaString.SchemaType.doValidate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:814:19)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:1639:9
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+        message: 'Path `confirm_password` is required.',
+        name: 'ValidatorError',
+        properties: [Object],
+        kind: 'required',
+        path: 'confirm_password',
+        value: undefined,
+        reason: undefined,
+        '$isValidatorError': true } },
+  _message: 'artist validation failed',
+  name: 'ValidationError' }
+[2018-05-30T14:00:07.580] [TRACE] development - Avatar is not available
+[2018-05-30T14:00:07.590] [DEBUG] development - Error =  { ValidationError: artist validation failed: music_type: Cast to Array failed for value "[ 'Hip Hop', 'R&B' ]" at path "music_type", confirm_password: Path `confirm_password` is required.
+    at ValidationError.inspect (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validation.js:56:24)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:195:12)
+    at Object.inspect (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:36:66)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:257:18)
+    at formatLogData (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:55:22)
+    at basicLayout (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:118:7)
+    at app (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\appenders\file.js:55:18)
+    at appenders.forEach (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:142:5)
+    at Array.forEach (<anonymous>)
+    at Logger.sendLogEventToAppender [as dispatch] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:141:13)
+    at Logger._log (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:95:12)
+    at Logger.(anonymous function) [as debug] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:127:14)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:145:20)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+  errors: 
+   { music_type: 
+      { CastError: Cast to Array failed for value "[ 'Hip Hop', 'R&B' ]" at path "music_type"
+    at new CastError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\cast.js:27:11)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:824:7)
+    at model._handleIndex (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:645:14)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:606:22)
+    at model.Document (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:111:12)
+    at model.Model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:62:12)
+    at new model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:3776:13)
+    at Object.artist_helper.insert_artist (e:\Angular5_projects\project\aom\server\helpers\artist_helper.js:21:15)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:141:42)
+    at <anonymous>
+        message: 'Cast to Array failed for value "[ \'Hip Hop\', \'R&B\' ]" at path "music_type"',
+        name: 'CastError',
+        stringValue: '"[ \'Hip Hop\', \'R&B\' ]"',
+        kind: 'Array',
+        value: [Array],
+        path: 'music_type',
+        reason: [MongooseError] },
+     confirm_password: 
+      { ValidatorError: Path `confirm_password` is required.
+    at new ValidatorError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validator.js:25:11)
+    at validate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:805:13)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:854:11
+    at Array.forEach (<anonymous>)
+    at SchemaString.SchemaType.doValidate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:814:19)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:1639:9
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+        message: 'Path `confirm_password` is required.',
+        name: 'ValidatorError',
+        properties: [Object],
+        kind: 'required',
+        path: 'confirm_password',
+        value: undefined,
+        reason: undefined,
+        '$isValidatorError': true } },
+  _message: 'artist validation failed',
+  name: 'ValidationError' }
+[2018-05-30T14:07:02.641] [TRACE] development - Avatar is not available
+[2018-05-30T14:07:02.674] [DEBUG] development - Error =  { ValidationError: artist validation failed: music_type: Cast to Array failed for value "[ 'Hip Hop', 'Rock', 'Electronic' ]" at path "music_type", confirm_password: Path `confirm_password` is required.
+    at ValidationError.inspect (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validation.js:56:24)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:195:12)
+    at Object.inspect (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:36:66)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:257:18)
+    at formatLogData (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:55:22)
+    at basicLayout (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:118:7)
+    at app (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\appenders\file.js:55:18)
+    at appenders.forEach (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:142:5)
+    at Array.forEach (<anonymous>)
+    at Logger.sendLogEventToAppender [as dispatch] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:141:13)
+    at Logger._log (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:95:12)
+    at Logger.(anonymous function) [as debug] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:127:14)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:145:20)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+  errors: 
+   { music_type: 
+      { CastError: Cast to Array failed for value "[ 'Hip Hop', 'Rock', 'Electronic' ]" at path "music_type"
+    at new CastError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\cast.js:27:11)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:824:7)
+    at model._handleIndex (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:645:14)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:606:22)
+    at model.Document (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:111:12)
+    at model.Model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:62:12)
+    at new model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:3776:13)
+    at Object.artist_helper.insert_artist (e:\Angular5_projects\project\aom\server\helpers\artist_helper.js:21:15)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:141:42)
+    at <anonymous>
+        message: 'Cast to Array failed for value "[ \'Hip Hop\', \'Rock\', \'Electronic\' ]" at path "music_type"',
+        name: 'CastError',
+        stringValue: '"[ \'Hip Hop\', \'Rock\', \'Electronic\' ]"',
+        kind: 'Array',
+        value: [Array],
+        path: 'music_type',
+        reason: [MongooseError] },
+     confirm_password: 
+      { ValidatorError: Path `confirm_password` is required.
+    at new ValidatorError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validator.js:25:11)
+    at validate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:805:13)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:854:11
+    at Array.forEach (<anonymous>)
+    at SchemaString.SchemaType.doValidate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:814:19)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:1639:9
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+        message: 'Path `confirm_password` is required.',
+        name: 'ValidatorError',
+        properties: [Object],
+        kind: 'required',
+        path: 'confirm_password',
+        value: undefined,
+        reason: undefined,
+        '$isValidatorError': true } },
+  _message: 'artist validation failed',
+  name: 'ValidationError' }
+[2018-05-30T14:13:18.168] [TRACE] development - Avatar is not available
+[2018-05-30T14:13:18.178] [DEBUG] development - Error =  { ValidationError: artist validation failed: music_type: Cast to Array failed for value "[ 'Pop', 'R&B' ]" at path "music_type", confirm_password: Path `confirm_password` is required.
+    at ValidationError.inspect (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validation.js:56:24)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:195:12)
+    at Object.inspect (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:36:66)
+    at formatValue (util.js:438:38)
+    at inspect (util.js:328:10)
+    at Object.format (util.js:257:18)
+    at formatLogData (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:55:22)
+    at basicLayout (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\layouts.js:118:7)
+    at app (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\appenders\file.js:55:18)
+    at appenders.forEach (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:142:5)
+    at Array.forEach (<anonymous>)
+    at Logger.sendLogEventToAppender [as dispatch] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\log4js.js:141:13)
+    at Logger._log (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:95:12)
+    at Logger.(anonymous function) [as debug] (e:\Angular5_projects\project\aom\server\node_modules\log4js\lib\logger.js:127:14)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:145:20)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)
+  errors: 
+   { music_type: 
+      { CastError: Cast to Array failed for value "[ 'Pop', 'R&B' ]" at path "music_type"
+    at new CastError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\cast.js:27:11)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:824:7)
+    at model._handleIndex (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:645:14)
+    at model.$set (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:606:22)
+    at model.Document (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:111:12)
+    at model.Model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:62:12)
+    at new model (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\model.js:3776:13)
+    at Object.artist_helper.insert_artist (e:\Angular5_projects\project\aom\server\helpers\artist_helper.js:21:15)
+    at async.waterfall (e:\Angular5_projects\project\aom\server\routes\index.js:141:42)
+    at <anonymous>
+        message: 'Cast to Array failed for value "[ \'Pop\', \'R&B\' ]" at path "music_type"',
+        name: 'CastError',
+        stringValue: '"[ \'Pop\', \'R&B\' ]"',
+        kind: 'Array',
+        value: [Array],
+        path: 'music_type',
+        reason: [MongooseError] },
+     confirm_password: 
+      { ValidatorError: Path `confirm_password` is required.
+    at new ValidatorError (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\error\validator.js:25:11)
+    at validate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:805:13)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:854:11
+    at Array.forEach (<anonymous>)
+    at SchemaString.SchemaType.doValidate (e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\schematype.js:814:19)
+    at e:\Angular5_projects\project\aom\server\node_modules\mongoose\lib\document.js:1639:9
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+        message: 'Path `confirm_password` is required.',
+        name: 'ValidatorError',
+        properties: [Object],
+        kind: 'required',
+        path: 'confirm_password',
+        value: undefined,
+        reason: undefined,
+        '$isValidatorError': true } },
+  _message: 'artist validation failed',
+  name: 'ValidationError' }
+[2018-05-30T14:23:45.614] [ERROR] development - Validation Error =  [ { location: 'body',
+    param: 'gender',
+    msg: 'Gender is required',
+    value: undefined } ]

@@ -84,7 +84,7 @@ router.post('/artist_registration', async (req, res) => {
       "first_name": req.body.first_name,
       "last_name": req.body.last_name,
       "zipcode": req.body.zipcode,
-      "music_type": JSON.parse(req.body.music_type)
+      "music_type": req.body.music_type
     };
 
     async.waterfall(
