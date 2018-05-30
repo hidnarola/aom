@@ -42,27 +42,37 @@
                       
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" formControlName="email"  [(ngModel)]="artist_data.email" name="artist_email" id="email" placeholder="Email" required>
-                            <div *ngIf="artist_step2.invalid && (artist_step2.controls['email'].dirty || artist_step2.controls['email'].touched)">
-                              <!-- <span *ngIf="artist_step2.controls['email'].errors.required" class="text-danger">Email is required</span>
-                              <span *ngIf="artist_step2.controls['email'].errors.pattern" class="text-danger">Email Mismatch</span> -->
+                            <input type="email" class="form-control" formControlName="email"  [(ngModel)]="artist_data.email" name="artist_email" id="email" placeholder="Email">
+                            <div *ngIf="!artist_step2.controls['email'].valid && artist_step2.controls['email'].dirty">
+                              <span *ngIf="artist_step2.controls['email'].errors['required']" class="text-danger">Email is required.</span>
+                              <span *ngIf="artist_step2.controls['email'].errors['email']" class="text-danger">Email Mismatched.</span>
                             </div>
                           </div>
-                          <div class="form-group pwd-grp">
-                            <label for="pwd">Password</label>
-                            <input type="password" class="form-control" formControlName="password" placeholder="Password"  required [(ngModel)]="artist_data.password" name="password">
-                            <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
-                            
-                          </div>
-                          <div class="form-group pwd-grp">
-                            <label for="pwd">Confirm Password</label>
-                            <input type="password" class="form-control" formControlName="conf"  name="confirm" [(ngModel)]="artist_data.confirm_password" placeholder="Password" required >
-                            <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                          <div [formGroup]="passwordFormGroup">
+                            <div class="form-group pwd-grp">
+                              <label for="pwd">Password</label>
+                              <input type="password" class="form-control" formControlName="password" placeholder="Password"  required [(ngModel)]="artist_data.password" name="password">
+                              <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                              <div *ngIf="!passwordFormGroup.controls['password'].valid && passwordFormGroup.controls['password'].dirty">
+                                <span *ngIf="passwordFormGroup.controls['password'].errors['required']" class="text-danger">Password is required.</span>
+                                <span *ngIf="passwordFormGroup.controls['password'].errors['minlength']" class="text-danger">Must be longer than 6 characters.</span>
+                              </div>
+                            </div>
+                            <div class="form-group pwd-grp">
+                              <label for="pwd">Confirm Password</label>
+                              <input type="password" class="form-control" formControlName="conf"  name="confirm" [(ngModel)]="artist_data.confirm_password" placeholder="Password" required >
+                              <div class="pwd-icon"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                              <div *ngIf="!passwordFormGroup.controls['conf'].valid && passwordFormGroup.controls['conf'].dirty">
+                                <!-- <span *ngIf="passwordFormGroup.controls['conf'].errors['required']" class="text-danger">Confirm Password is required.</span> -->
+                                <span *ngIf="passwordFormGroup.controls['conf'].errors['minlength']" class="text-danger">Must be longer than 6 characters.</span>
+                                <span *ngIf="passwordFormGroup.controls['conf'].errors['mismatch']" class="text-danger">Please enter correct confirm password.</span>
+                              </div>
+                            </div>
                           </div>
                     </div>
                     <div class="button_group">
                       <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                      <button type="submit" (click)="nxt_btn('artist')" class="next-btn" >Next</button>
+                      <button type="submit" (click)="nxt_btn('artist')" class="next-btn"  [disabled]="!artist_step2.valid">Next</button>
                     </div>
                 </form>
               </div>
@@ -70,89 +80,100 @@
               <div class="steps step3 {{artist_cnt == 3 ? 'next_form' : ''}}" id="about-step3">
                 <div class="heading"><h3>Tell Us About Yourself</h3></div>
                 <div class="progress_bar fill14"></div>
-                <div class="email-form">
-                  <form>
-                    <div class="form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control"  placeholder="First Name">
-                      </div>
-                      <div class="form-group pwd-grp">
-                        <label for="lanem">Last Name</label>
-                        <input type="text" class="form-control"  placeholder="Last Name">
-                      </div>
-                      <div class="form-group gender-grp">
-                        <label for="geder">Gender</label>
-                      <select class="form-control" id="gender">
-                          <option>Male</option>
-                          <option>Female</option>
-                      </select>
-                      </div>
-                      
-                  </form>
-                </div>
-                <div class="button_group">
-                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
-                </div>
+                <form [formGroup]="artist_step3">
+                  <div class="email-form">
+                      <div class="form-group">
+                          <label for="fname">First Name</label>
+                          <input type="text" class="form-control" formControlName="fname"  name="artist_fname" [(ngModel)]="artist_data.fname"  placeholder="First Name">
+                          <div *ngIf="!artist_step3.controls['fname'].valid && artist_step3.controls['fname'].dirty">
+                            <span *ngIf="artist_step3.controls['fname'].errors['required']" class="text-danger">First name is required.</span>
+                          </div>
+                        </div>
+                        <div class="form-group pwd-grp">
+                          <label for="lanem">Last Name</label>
+                          <input type="text" class="form-control"  formControlName="lname" [(ngModel)]="artist_data.lname"  name="artist_lname" placeholder="Last Name">
+                          <div *ngIf="!artist_step3.controls['lname'].valid && artist_step3.controls['lname'].dirty">
+                            <span *ngIf="artist_step3.controls['lname'].errors['required']" class="text-danger">First name is required.</span>
+                          </div>
+                        </div>
+                        <div class="form-group gender-grp">
+                          <label for="geder">Gender</label>
+                          <select class="form-control" id="gender" formControlName="gender" name="artist_gender" [(ngModel)]="artist_data.gender">
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                          </select>
+                        </div>
+                  </div>
+                  <div class="button_group">
+                    <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                    <button type="submit" (click)="nxt_btn('artist')"  class="next-btn">Next</button>
+                  </div>
+                </form>
               </div>
 
               <div class="steps step4 {{artist_cnt == 4 ? 'next_form' : ''}}" id="location-step4">
                 <div class="heading"><h3>Where Are You From?</h3></div>
                 <div class="progress_bar fill14"></div>
-                <div class="email-form">
-                  <form>
-                    <div class="form-img-wrap">
-                      <img src="img/location-icon.png" alt="Location Icon">
-                      <p>Please, Enter zip code below</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="zipcode">Zip code</label>
-                        <input type="text" class="form-control"  placeholder="Zip Code">
+                <form [formGroup]="artist_step4">
+                  <div class="email-form">
+                      <div class="form-img-wrap">
+                        <img src="img/location-icon.png" alt="Location Icon">
+                        <p *ngIf="location == ''">Please, Enter zip code below</p>
+                        <p *ngIf="location != ''">{{location}}</p>
                       </div>
-                      
-                  </form>
-                </div>
-                <div class="button_group">
-                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
-                </div>
+                      <div class="form-group">
+                          <label for="zipcode">Zip code</label>
+                          <input type="text" class="form-control" formControlName="zipcode" (change)="getLocation()"  [(ngModel)]="artist_data.zipcode" name="artist_zipcode" placeholder="Zip Code">
+                          <div *ngIf="!artist_step4.controls['zipcode'].valid && artist_step4.controls['zipcode'].dirty">
+                            <span *ngIf="artist_step4.controls['zipcode'].errors['required']" class="text-danger">Zipcode is required.</span>
+                            <span *ngIf="artist_step4.controls['zipcode'].errors['pattern']" class="text-danger">please enter valid zipcode.</span>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="button_group">
+                    <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                    <button type="submit" (click)="nxt_btn('artist')" [disabled]="!artist_step4.valid" class="next-btn" >Next</button>
+                  </div>
+                </form>
               </div>
 
               <div class="steps step5 {{artist_cnt == 5 ? 'next_form' : ''}}" id="music-type-step5">
                 <div class="heading"><h3>What Type of Music?</h3></div>
                 <div class="progress_bar fill14"></div>
-                <div class="type-music">
-                  <ul>
-                    <li>
-                      <input type="checkbox" value="Hip Hop">
-                       <div class="music-checked">Hip Hop</div>
-                    </li>
-                    <li>
-                      <input type="checkbox" value="Pop">
-                      <div class="music-checked chk-pop">Pop</div>
-                    </li>
-                    <li>
-                      <input type="checkbox" value="R&B">
-                      <div class="music-checked chk-rb">R&B</div>
-                    </li>
-                    <li>
-                      <input type="checkbox" value="Electronic">
-                      <div class="music-checked chk-ele">Electronic</div>
-                    </li>
-                    <li>
-                      <input type="checkbox" value="Rock">
-                      <div class="music-checked chk-rock">Rock</div>
-                    </li>
-                    <li>
-                      <input type="checkbox" value="Latin">
-                      <div class="music-checked chk-latin">Latin</div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="button_group">
-                  <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
-                </div>
+                <form>
+                  <div class="type-music">
+                    <ul>
+                      <li>
+                        <input type="checkbox" value="Hip Hop" name="music" (change)="onChange('Hip Hop', $event.target.checked)">
+                        <div class="music-checked"  >Hip Hop</div>
+                      </li>
+                      <li>
+                        <input type="checkbox" value="Pop" name="music" (change)="onChange('Pop', $event.target.checked)">
+                        <div class="music-checked chk-pop"  >Pop</div>
+                      </li>
+                      <li>
+                        <input type="checkbox" value="R&B" name="music" (change)="onChange('R&B', $event.target.checked)">
+                        <div class="music-checked chk-rb"  >R&B</div>
+                      </li>
+                      <li>
+                        <input type="checkbox" value="Electronic" name="music" (change)="onChange('Electronic', $event.target.checked)">
+                        <div class="music-checked chk-ele"  >Electronic</div>
+                      </li>
+                      <li>
+                        <input type="checkbox" value="Rock" name="music" (change)="onChange('Rock', $event.target.checked)">
+                        <div class="music-checked chk-rock" >Rock</div>
+                      </li>
+                      <li>
+                        <input type="checkbox" value="Latin" name="music" (change)="onChange('Latin', $event.target.checked)">
+                        <div class="music-checked chk-latin" >Latin</div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="button_group">
+                    <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
+                    <button type="submit" (click)="nxt_btn('artist')" [disabled]="artist_data.music_type.length <= 0" class="next-btn">Next</button>
+                  </div>
+                </form>
               </div>
 
 
@@ -160,18 +181,34 @@
                 <div class="heading"><h3>Upload Profile Photo</h3></div>
                 <div class="progress_bar fill14"></div>
                 <div class="upload-block">
-                  <div class="upl-div">
-                    <div class="upload-btn"> 
+                  <div class="upl-div" >
+                    <div class="upload-btn" *ngIf="!cropperReady"> 
                       <span class="upl-img"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span> 
                       <span class="up_text">Upload Photo</span> 
-                      <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false"> 
+                      <input type="file" name="my_doc_upload" (change)="fileChangeEvent($event)" id="my_doc_upload" multiple="false"> 
                       <p class="instrution">320x320px .png, .jpg 5MB or less</p>
+                    </div>
+                    <div [style.display]="cropperReady ? null : 'none'">
+                      <image-cropper
+                          [imageChangedEvent]="imageChangedEvent"
+                          [maintainAspectRatio]="true"
+                          [aspectRatio]="1 / 1"
+                          [resizeToWidth]="128"
+                          format="jpeg"
+                          (imageCropped)="imageCropped($event)"
+                          (imageLoaded)="imageLoaded()"
+                          (loadImageFailed)="loadImageFailed()"
+                          [style.display]="cropperReady ? null : 'none'"
+                      ></image-cropper>
                     </div>
                   </div>
                   <div class="upl-div">
-                    <div class="upload-btn-cstm_p"> 
+                    <div class="upload-btn-cstm_p" *ngIf="!cropperReady"> 
                       <span class="upl-img"><img src="img/icons8-microphone2Normal.png" alt=""></span> 
                       <!-- <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false">  -->
+                    </div>
+                    <div [style.display]="cropperReady ? null : 'none'">
+                      <img [src]="croppedImage" style="height: 167px;width: 155px;"/>
                     </div>
                   </div>
                 </div>
@@ -184,7 +221,7 @@
                 </div>
                 <div class="button_group">
                   <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a>
+                  <button  (click)="nxt_btn('artist')" [disabled]="!cropperReady" class="next-btn">Next</button>
                 </div>
               </div>
 
@@ -195,35 +232,35 @@
                   <div class="social-block">
                     <div class="form-group">
                         <label for="facebook">Facebook</label>
-                        <input type="text" class="form-control" id="fb" placeholder="Add Account" required>
+                        <input type="text" class="form-control" id="fb" name="artist_fb" [(ngModel)]="artist_data.share_url['facebook']" placeholder="Add Account" >
                         <img src="img/fb.png" alt="Facebook">
                       </div>
                   </div>
                   <div class="social-block">
                     <div class="form-group">
                         <label for="inst">Instagram</label>
-                        <input type="text" class="form-control" placeholder="Add Account" required>
+                        <input type="text" class="form-control" placeholder="Add Account" name="artist_insta" [(ngModel)]="artist_data.share_url['instagram']">
                         <img src="img/inst.png" alt="Facebook">
                       </div>
                   </div>
                   <div class="social-block">
                     <div class="form-group">
                         <label for="facebook">Twitter</label>
-                        <input type="text" class="form-control" id="fb1" placeholder="Add Account" required>
+                        <input type="text" class="form-control" id="fb1" placeholder="Add Account" name="artist_tweet" [(ngModel)]="artist_data.share_url['twitter']">
                         <img src="img/twitter.png" alt="Facebook">
                       </div>
                   </div>
                   <div class="social-block">
                     <div class="form-group">
                         <label for="inst">Youtube</label>
-                        <input type="text" class="form-control"  placeholder="Add Account" required>
+                        <input type="text" class="form-control"  placeholder="Add Account" name="artist_youtube" [(ngModel)]="artist_data.share_url['youtube']">
                         <img src="img/youtube.png" alt="Facebook">
                       </div>
                   </div>
                   <div class="social-block">
                     <div class="form-group">
                         <label for="inst">Soundcloud</label>
-                        <input type="text" class="form-control"  placeholder="Add Account" required>
+                        <input type="text" class="form-control"  placeholder="Add Account" name="artist_sound" [(ngModel)]="artist_data.share_url['sound_cloud']">
                         <img src="img/soundcloud.png" alt="Facebook">
                       </div>
                   </div>
@@ -231,7 +268,7 @@
                 </div>
                 <div class="button_group">
                   <a href="javascript:;" class="back-btn" (click)="back_btn('artist')"><img src="img/prev-arrow.png" alt="Previou Arrow"> Back</a>
-                  <!-- a href="javascript:;" (click)="nxt_btn('artist')" class="next-btn">Next</a-->
+                  <button (click)="artist_submit()" class="next-btn">Finish</button>
                 </div>
               </div>
             </div>
@@ -240,10 +277,10 @@
               <div class="steps step1 {{listner_cnt == 1 ? 'next_form' : ''}}" id="listner-register">
                 <div class="social-login">
                   <div class="google-login">
-                    <a href="#"><i class="fa fa-google" aria-hidden="true"></i> <span>Login with Google</span></a>
+                    <a href="javascript:;" id="googleBtn"><i class="fa fa-google"  aria-hidden="true"></i> <span>Login with Google</span></a>
                   </div>
                   <div class="fb-login">
-                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> <span>Login with Facebook</span></a>
+                    <a href="javascript:;"><i class="fa fa-facebook" aria-hidden="true"></i> <span>Login with Facebook</span></a>
                   </div>
                 </div>
                 <div class="progress_bar fill14"></div>
