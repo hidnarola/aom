@@ -137,7 +137,7 @@ router.post('/artist_registration', async (req, res) => {
 
           var obj = {}
           var data = await artist_helper.insert_artist(reg_obj);
-          var datas = await artist_helper.insert_notification(obj);
+          // var datas = await artist_helper.insert_notification(obj);
 
           if (data.status == 0) {
             logger.debug("Error = ", data.error);
@@ -145,14 +145,6 @@ router.post('/artist_registration', async (req, res) => {
           } else {
             logger.trace("Artist has been inserted");
 
-            logger.trace("sending mail");
-
-            let mail_resp = await mail_helper.send("email_confirmation", {
-              "to": data.artist.email,
-              "subject": "Music Social Voting - Email confirmation"
-            }, {
-                "confirm_url": config.website_url + "/email_confirm/" + data.artist._id
-              });
             if (mail_resp.status === 0) {
               res.status(config.INTERNAL_SERVER_ERROR).json({ "status": 0, "message": "Error occured while sending confirmation email", "error": mail_resp.error });
             } else {
