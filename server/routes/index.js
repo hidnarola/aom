@@ -350,10 +350,7 @@ router.post('/user_registration', async (req, res) => {
       notEmpty: true,
       errorMessage: "zipcode is required"
     },
-    "gender": {
-      notEmpty: true,
-      errorMessage: "Gender is required"
-    }
+
 
   };
   req.checkBody(schema);
@@ -363,9 +360,7 @@ router.post('/user_registration', async (req, res) => {
     var obj = {
       "social_media": req.body.social_media,
       "email": req.body.email,
-      "gender": req.body.gender,
       "password": req.body.password,
-      "confirm_password": req.body.confirm_password,
       "first_name": req.body.first_name,
       "last_name": req.body.last_name,
       "zipcode": req.body.zipcode,
