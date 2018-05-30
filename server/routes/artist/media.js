@@ -29,6 +29,7 @@ var fs = require('fs');
  * @apiError (Error 4xx) {String} message Validation or error message.
  */
 router.post("/", async (req, res) => {
+
     var obj = {
         artist_id: req.userInfo.id
     };

@@ -80,15 +80,10 @@ follower_helper.get_artist_followers_by_gender = async (artist_id, day) => {
 };
 
 
-
 follower_helper.get_artist_followers_by_day = async (artist_id, day) => {
 
     var to = moment().utcOffset(0);
     var from = moment(to).subtract(day, "days").utcOffset(0);
-
-    console.log("to:", to)
-    console.log("from:", from)
-
     var aggregate = [
         {
             "$match":
@@ -115,13 +110,10 @@ follower_helper.get_artist_followers_by_day = async (artist_id, day) => {
 };
 
 
-
 follower_helper.get_artist_followers_by_age = async (artist_id, day) => {
 
     var to = moment().utcOffset(0);
     var from = moment(to).subtract(day, "days").utcOffset(0);
-
-
     var aggregate = [
         {
             "$match":
@@ -141,7 +133,6 @@ follower_helper.get_artist_followers_by_age = async (artist_id, day) => {
         {
             $unwind: "$user"
         },
-
         {
             "$group": {
                 _id:
@@ -150,22 +141,18 @@ follower_helper.get_artist_followers_by_age = async (artist_id, day) => {
                         month: { $month: "$user.dob" },
                         day: { $dayOfMonth: "$user.dob" },
                     },
-                count:{$sum:1}                     
+                count: { $sum: 1 }
             }
         },
         {
             "$project":
                 {
                     _id: 0,
-                    age: { $subtract: [{ $year: new Date() }, "$_id.year"] },                
+                    age: { $subtract: [{ $year: new Date() }, "$_id.year"] },
                     data: 1,
-                    count:1
-
+                    count: 1
                 }
         },
-        
-
-
     ];
 
     let result = await Followers.aggregate(aggregate);
@@ -174,7 +161,6 @@ follower_helper.get_artist_followers_by_age = async (artist_id, day) => {
     } else {
         return { "status": 2, "message": "No  available followers" }
     }
-
 };
 
 module.exports = follower_helper;

@@ -26,16 +26,15 @@ var super_admin_helper = require('./../helpers/super_admin_helper');
  * 
  * @apiHeader {String}  Content-Type application/json
  * 
- * @apiParam {String} social_media Social Media of artist
- * @apiParam {String} music_type Type of music
+ 
+ * @apiParam {Array} music_type Type of music
  * @apiParam {String} email Email address
  * @apiParam {String}  password Password
- * @apiParam {String}  confirm_password Confirm Password
  * @apiParam {String} last_name Last Name
  * @apiParam {String} first_name First Name
  * @apiParam {String} zipcode Zipcode
  * @apiParam {String} gender Gender
- * @apiParam {String} image Image
+ * @apiParam {File} image Image
 
  * 
  * @apiSuccess (Success 200) {String} message Success message
@@ -43,10 +42,6 @@ var super_admin_helper = require('./../helpers/super_admin_helper');
  */
 router.post('/artist_registration', async (req, res) => {
   var schema = {
-    /*   "social_media": {
-         notEmpty: true,
-         errorMessage: "social media is required"
-       },*/
     "music_type": {
       notEmpty: true,
       errorMessage: "Music Type is required"
@@ -58,10 +53,6 @@ router.post('/artist_registration', async (req, res) => {
     "password": {
       notEmpty: true,
       errorMessage: "password is required"
-    },
-    "confirm_password": {
-      notEmpty: true,
-      errorMessage: "confirm password is required"
     },
     "last_name": {
       notEmpty: true,
@@ -93,7 +84,7 @@ router.post('/artist_registration', async (req, res) => {
       "first_name": req.body.first_name,
       "last_name": req.body.last_name,
       "zipcode": req.body.zipcode,
-      "music_type": req.body.music_type
+      "music_type": JSON.parse(req.body.music_type)
     };
 
     async.waterfall(
@@ -146,8 +137,9 @@ router.post('/artist_registration', async (req, res) => {
         let artist = await artist_helper.get_artist_by_email(req.body.email)
         if (artist.status === 2) {
 
-          // Insert promoter
+          var obj = {}
           var data = await artist_helper.insert_artist(reg_obj);
+          var datas = await artist_helper.insert_notification(obj);
 
           if (data.status == 0) {
             logger.debug("Error = ", data.error);
@@ -314,11 +306,10 @@ router.post('/artist_login', async (req, res) => {
  * 
  * @apiHeader {String}  Content-Type application/json
  * 
- * @apiParam {String} social_media Social Media of artist
- * @apiParam {String} music_type Type of music
+
+ * @apiParam {Array} music_type Type of music
  * @apiParam {String} email Email address
  * @apiParam {String}  password Password
- * @apiParam {String}  confirm_password Confirm Password
  * @apiParam {String} last_name Last Name
  * @apiParam {String} first_name First Name
  * @apiParam {String} zipcode Zipcode
@@ -348,10 +339,6 @@ router.post('/user_registration', async (req, res) => {
     "password": {
       notEmpty: true,
       errorMessage: "password is required"
-    },
-    "confirm_password": {
-      notEmpty: true,
-      errorMessage: "confirm password is required"
     },
     "last_name": {
       notEmpty: true,
@@ -646,7 +633,6 @@ router.post('/artist_reset_password', async (req, res) => {
             res.status(config.OK_STATUS).json({ "status": 1, "message": "Password has been changed" });
           }
         } else {
-
         }
       }
     });
@@ -1153,6 +1139,8 @@ router.post('/super_admin_login', async (req, res) => {
     res.status(config.BAD_REQUEST).json({ message: errors });
   }
 });
+
+
 
 
 module.exports = router;
