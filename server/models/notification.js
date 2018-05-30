@@ -1,7 +1,7 @@
 //Require Mongoose
 var mongoose = require('mongoose');
 
-//Define a schema
+//Define a schema for notification
 var Schema = mongoose.Schema;
 
 var EmailSchema = new Schema({
