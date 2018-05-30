@@ -143,29 +143,9 @@
                 <form>
                   <div class="type-music">
                     <ul>
-                      <li>
-                        <input type="checkbox" value="Hip Hop" name="music" (change)="onChange('Hip Hop', $event.target.checked)">
-                        <div class="music-checked"  >Hip Hop</div>
-                      </li>
-                      <li>
-                        <input type="checkbox" value="Pop" name="music" (change)="onChange('Pop', $event.target.checked)">
-                        <div class="music-checked chk-pop"  >Pop</div>
-                      </li>
-                      <li>
-                        <input type="checkbox" value="R&B" name="music" (change)="onChange('R&B', $event.target.checked)">
-                        <div class="music-checked chk-rb"  >R&B</div>
-                      </li>
-                      <li>
-                        <input type="checkbox" value="Electronic" name="music" (change)="onChange('Electronic', $event.target.checked)">
-                        <div class="music-checked chk-ele"  >Electronic</div>
-                      </li>
-                      <li>
-                        <input type="checkbox" value="Rock" name="music" (change)="onChange('Rock', $event.target.checked)">
-                        <div class="music-checked chk-rock" >Rock</div>
-                      </li>
-                      <li>
-                        <input type="checkbox" value="Latin" name="music" (change)="onChange('Latin', $event.target.checked)">
-                        <div class="music-checked chk-latin" >Latin</div>
+                      <li *ngFor="let x of music_types">
+                        <input type="checkbox" name="music" (change)="onChange(x['_id'], $event.target.checked)">
+                        <div class="music-checked chk-{{x['alias']}}"  >{{x.name}}</div>
                       </li>
                     </ul>
                   </div>
@@ -424,7 +404,11 @@
                 <div class="progress_bar fill14"></div>
                 <div class="type-music">
                   <ul>
-                    <li>
+                    <li *ngFor="let x of music_types">
+                        <input type="checkbox" name="music" (change)="onChangeForListener(x['_id'], $event.target.checked)">
+                        <div class="music-checked chk-{{x['alias']}}"  >{{x.name}}</div>
+                    </li>
+                    <!--li>
                       <input type="checkbox" value="Hip Hop" (change)="onChangeForListener('Hip Hop', $event.target.checked)">
                        <div class="music-checked">Hip Hop</div>
                     </li>
@@ -447,7 +431,7 @@
                     <li>
                       <input type="checkbox" value="Latin" (change)="onChangeForListener('Latin', $event.target.checked)">
                       <div class="music-checked chk-latin">Latin</div>
-                    </li>
+                    </li -->
                   </ul>
                 </div>
                 <div class="button_group">

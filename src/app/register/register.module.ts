@@ -5,8 +5,10 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { RegisterComponent } from './register.component';
 import { RegisterService } from './register.service';
 import { Http, HttpModule } from '@angular/http';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+// import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -16,6 +18,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     HttpClientModule, 
     ReactiveFormsModule,
     ImageCropperModule,
+    ToastrModule.forRoot(),
     RouterModule.forChild([
       { path: 'register', component: RegisterComponent }
     ])

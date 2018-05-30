@@ -1,5 +1,6 @@
 import { Component, OnInit, Directive, forwardRef, Attribute } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from './register.service';
 import { environment } from '../../environments/environment';
 declare const gapi: any;
@@ -14,6 +15,7 @@ export class RegisterComponent implements OnInit {
   public listner_cnt : any = 0;
   public step_flag : boolean = true;
   public auth2: any;
+  public music_types : any = [];
   public artist_data : any = {
     'music_type' : [],
     'share_url' : {
@@ -50,7 +52,7 @@ export class RegisterComponent implements OnInit {
   listener_step3 : FormGroup;
   listener_step4 : FormGroup;
 
-  constructor(private fb: FormBuilder, private RegisterService : RegisterService) {
+  constructor(private fb: FormBuilder, private RegisterService : RegisterService, private toastr: ToastrService) {
     this.artist_cnt = 0;
     this.listner_cnt = 0;
     this.day = [];
@@ -113,6 +115,10 @@ export class RegisterComponent implements OnInit {
     this.listener_step4 = this.fb.group({
       zipcode : ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
+
+    this.RegisterService.getAllMusicType().subscribe(response => {
+      this.music_types = response['music'];
+    });
    }
   
   // Code for initialize google login button
@@ -147,6 +153,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.googleInit();
+    
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -160,7 +167,7 @@ export class RegisterComponent implements OnInit {
   getLocation() {
     if(this.artist_data['zipcode']) {
       this.RegisterService.getLocationFromZipCode(this.artist_data['zipcode']).subscribe(response => {
-        const res =  JSON.parse(response['_body']);
+        const res =  response;
         if(res['results'].length > 0 && res['results'][0].hasOwnProperty('address_components')) {
           if(res['results'][0]['address_components'].length > 3) {
             this.location = res['results'][0]['address_components'][1]['long_name']+', '+res['results'][0]['address_components'][3]['long_name']
@@ -179,7 +186,7 @@ export class RegisterComponent implements OnInit {
   getLocationForListener() {
     if(this.listener_data['zipcode']) {
       this.RegisterService.getLocationFromZipCode(this.listener_data['zipcode']).subscribe(response => {
-        const res =  JSON.parse(response['_body']);
+        const res = response;
         if(res['results'].length > 0 && res['results'][0].hasOwnProperty('address_components')) {
           if(res['results'][0]['address_components'].length > 3) {
             this.location = res['results'][0]['address_components'][1]['long_name']+', '+res['results'][0]['address_components'][3]['long_name']
@@ -236,11 +243,25 @@ export class RegisterComponent implements OnInit {
       last_name : this.artist_data['lname'],
       zipcode : this.artist_data['zipcode'],
       gender : this.artist_data['gender'],
-      music_type : this.artist_data['music_type']
+      music_type : this.artist_data['music_type'],
+      image : this.croppedImage
     };
     console.log('artist', data);
     this.RegisterService.artistRegistration(data).subscribe(response => {
       console.log('response', response);
+      this.step_flag = true;
+      this.artist_cnt = 0;
+      this.artist_data = {
+        'music_type' : [],
+        'share_url' : {
+          'facebook' : '',
+          'instagram' : '',
+          'twitter' : '',
+          'youtube' : '',
+          'sound_cloud' : ''
+        }
+      };
+      this.toastr.success('Success!', 'Registration done successfully and confirmation email sent to your account please verify to to do login.');
     });
   }
   // Handle submit event of listener form
@@ -256,6 +277,12 @@ export class RegisterComponent implements OnInit {
     console.log('listener', data);
     this.RegisterService.listenerRegistration(data).subscribe(response => {
       console.log('response', response);
+      this.step_flag = true;
+      this.listner_cnt = 0;
+      this.listener_data = {
+        'music_type' : []
+      };
+      this.toastr.success('Success!', 'Registration done successfully and confirmation email sent to your account please verify to to do login.');
     });
   }
 

@@ -25,7 +25,8 @@
         "../src/assets/css/font-awesome.min.css",
         "../src/assets/css/jquery.fancybox.min.css",
         "../src/assets/css/style.css",
-        "../src/assets/css/font.googleapi.css"
+        "../src/assets/css/font.googleapi.css",
+        "../node_modules/ngx-toastr/toastr.css"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.js"
