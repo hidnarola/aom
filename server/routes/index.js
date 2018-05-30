@@ -16,6 +16,7 @@ var user_helper = require('./../helpers/user_helper');
 var track_helper = require('./../helpers/track_helper');
 var admin_helper = require('./../helpers/admin_helper');
 var super_admin_helper = require('./../helpers/super_admin_helper');
+var music_helper = require('./../helpers/music_helper');
 
 /**
  * @api {post} /artist_registration Artist Registration
@@ -1131,6 +1132,15 @@ router.post('/super_admin_login', async (req, res) => {
 });
 
 
-
+router.get("/music_type", async (req, res) => {
+  var resp_data = await music_helper.get_all_music_type();
+  if (resp_data.status == 0) {
+    logger.error("Error occured while fetching music = ", resp_data);
+    res.status(config.INTERNAL_SERVER_ERROR).json(resp_data);
+  } else {
+    logger.trace("Music got successfully = ", resp_data);
+    res.status(config.OK_STATUS).json(resp_data);
+  }
+});
 
 module.exports = router;
